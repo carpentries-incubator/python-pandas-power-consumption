@@ -14,4 +14,13 @@ FIXME: home page introduction
 > FIXME
 {: .prereq}
 
+> ## Learning Objectives
+> After following this lesson, learners will be able to:
+>  
+> - describe general programming concepts and their relation to algorithmic thinking
+> - recognize the application of algorithmic thinking to time series analysis
+> - build an analytic pipeline in Python to batch process and perform a time series analysis of solar power generation data
+> 
+{: .objectives }
+
 {% include links.md %}
