@@ -15,4 +15,7 @@ keypoints:
 
 Time series data are often stored at intervals as files. In order to analyze the complete time series, it's necessary to combine these files. This can present challenges as the instruments used to record the data may change over time, resulting in the use of different layouts and column headers across time to describe the same types of measurements.
 
+
+
+
 {% include links.md %}
