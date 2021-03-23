@@ -6,6 +6,7 @@ questions:
 - "How can we manipulate tabular data files in Python?"
 objectives:
 - "Read tabular data from a file into a program."
+- "Change the structure of a dataframe."
 - "Combine multiple files into a master dataset."
 keypoints:
 - "PANDAS is a Python library designed to work with large datasets."
