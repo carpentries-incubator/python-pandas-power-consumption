@@ -67,25 +67,23 @@ print(data.shape)
 {: .output}
 
 
-> ## Check Your Understanding
+> ## Challenge: Know Your Data
 >
-> What values do the variables `mass` and `age` have after each of the following statements?
-> Test your answer by executing the lines.
+> Which of the following commands will output the data type
+> of the 'Global\_active\_power' column in our 'data' dataframe?
 >
 > ~~~
-> mass = 47.5
-> age = 122
-> mass = mass * 2.0
-> age = age - 20
+> A. print(type(Global\_active\_power))
+> B. print(data.info())
+> C. print(data.dtypes)
+> D. print(Global\_active\_power.dtypes)
 > ~~~
 > {: .language-python}
 >
 > > ## Solution
 > > ~~~
-> > `mass` holds a value of 47.5, `age` does not exist
-> > `mass` still holds a value of 47.5, `age` holds a value of 122
-> > `mass` now has a value of 95.0, `age`'s value is still 122
-> > `mass` still has a value of 95.0, `age` now holds 102
+> > B and C will both print out data type information
+> > for all columns.
 > > ~~~
 > > {: .output}
 > {: .solution}
