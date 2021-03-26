@@ -17,7 +17,7 @@ Time series data are often stored at intervals as files. In order to analyze the
 
 ## Libraries
 
-When you launch a Python environment, it opens with a set of default libraries loaded. These libraries provide access to a default set of functions, including commonly used functions like ```print``` and ```help```. Libraries can be used to extend the functionality of the environment beyond the default.
+When you launch a Python environment, it opens with a set of default libraries loaded. These libraries provide access to a default set of functions, including commonly used functions like ```print()``` and ```help()```. Libraries can be used to extend the functionality of the environment beyond the default.
 
 About Pandas...
 
@@ -103,7 +103,7 @@ dtype('float64')
 
 We can also use functions or methods to see information about the dataframe.
 
-The ```info``` function outputs structural information about the data.
+The ```info()``` function outputs structural information about the data.
 
 ~~~
 print(data.info())
@@ -130,9 +130,9 @@ None
 ~~~
 {: .output}
 
-Note that ```info``` prints out all of the information we got from the ```type``` function and the ```shape``` and ```dtypes``` attributes. 
+Note that ```info()``` prints out all of the information we got from the ```type()``` function and the ```shape``` and ```dtypes``` attributes. 
 
-We can also inspect some rows of data. Since the table is large - 207,526 rows - we may only want to look at the first few or the last few rows. To do this, we can use the ```head``` and ````tail``` functions, respectively.
+We can also inspect some rows of data. Since the table is large - 207,526 rows - we may only want to look at the first few or the last few rows. To do this, we can use the ```head()``` and ````tail()``` functions, respectively.
 
 ~~~
 print(data.head())
@@ -166,7 +166,7 @@ Date      Time  ...  Sub_metering_2  Sub_metering_3
 
 Note that the printed rows are truncated - the three ellipses in the output indicate that some rows have been excluded from the printout.
 
-So far all of the functions we've used have been called using default arugments. For example, by default ```head``` and ```tail``` will
+So far all of the functions we've used have been called using default arugments. For example, by default ```head()``` and ```tail()``` will
 print the first or last five rows. If we want to view more (or fewer) rows, we can pass the number of rows as an argument. If for example
 we wanted to see the first ten rows of data, we would pass that number as the argument:
 
@@ -212,5 +212,37 @@ print(data.head(10))
 > > {: .output}
 > {: .solution}
 {: .challenge}
+
+
+> ## Challenge: Drilling Down
+>
+> We have seen how we can use _dot notation_ to get the 'dtypes' information
+> for a single column:
+>
+> ~~~
+> print(data.Voltage.dtypes)
+> ~~~
+> {: .language-python}
+> 
+> Dot notation can be used in function calls, too.
+> Which of the following commands would we use to view
+> the first 20 rows of data from the _Voltage_ column:
+> ~~~
+> A. print(data.Voltage.head())
+> B. print(data.Voltage.info())
+> C. print(data.head(20).Voltage)
+> D. print(data.Voltage.head(20))
+> ~~~
+> {: .language-python}
+>
+> > ## Solution
+> > ~~~
+> > Option D prints out the first 20 rows of data
+> > from the Voltage column.
+> > ~~~
+> > {: .output}
+> {: .solution}
+{: .challenge}
+
 
 {% include links.md %}
