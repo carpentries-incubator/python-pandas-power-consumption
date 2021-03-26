@@ -57,6 +57,8 @@ print(type(data))
 
 We can get information about the data by requesting its attributes or using functions.
 
+Use the ```shape`` attribute to see the size in rows and columns.
+
 ~~~
 print(data.shape)
 ~~~
@@ -65,6 +67,7 @@ print(data.shape)
 (207526, 9)
 ~~~
 {: .output}
+
 
 
 > ## Challenge: Know Your Data
