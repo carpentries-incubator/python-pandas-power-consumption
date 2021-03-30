@@ -21,7 +21,7 @@ When you launch a Python environment, it opens with a set of default libraries l
 
 About Pandas...
 
-About glob
+About glob...
 
 
 ~~~
@@ -244,5 +244,57 @@ print(data.head(10))
 > {: .solution}
 {: .challenge}
 
+
+## Modifying data frames - adding columns
+
+If we inspect the first five rows of the ```Date``` column, we see that dates are provided in a non-standard format. This makes it difficult to do date math, create histograms, etc.
+
+~~~
+print(data.Date.head())
+~~~
+{: .language-python}
+~~~
+0    16/12/2006
+1    16/12/2006
+2    16/12/2006
+3    16/12/2006
+4    16/12/2006
+Name: Date, dtype: object
+~~~
+{: .output}
+
+Note as well that the data type (```dtype```) is given as ```object```, even though ```datetime``` is a data type recognized by Pandas. In order to use date information in analyses, we have to convert the data in the ```Date``` column into a recognized date format. Pandas come with functions to do this.
+
+~~~
+data["iso_date"] = pd.to_datetime(data["Date"], format='%d/%m/%Y')
+~~~
+{: .language-python}
+
+We can verify that the new column was added and that the data type of the new column is ```datetime``` using the ```info()``` command.
+
+~~~
+print(data.info())
+~~~
+{: .language-python}
+~~~
+<class 'pandas.core.frame.DataFrame'>
+RangeIndex: 207526 entries, 0 to 207525
+Data columns (total 10 columns):
+ #   Column                 Non-Null Count   Dtype         
+---  ------                 --------------   -----         
+ 0   Date                   207526 non-null  object        
+ 1   Time                   207526 non-null  object        
+ 2   Global_active_power    203794 non-null  float64       
+ 3   Global_reactive_power  203794 non-null  float64       
+ 4   Voltage                203794 non-null  float64       
+ 5   Global_intensity       203794 non-null  float64       
+ 6   Sub_metering_1         203794 non-null  float64       
+ 7   Sub_metering_2         203794 non-null  float64       
+ 8   Sub_metering_3         203794 non-null  float64       
+ 9   iso_date               207526 non-null  datetime64[ns]
+dtypes: datetime64[ns](1), float64(7), object(2)
+memory usage: 15.8+ MB
+~~~
+{: .output}
 
 {% include links.md %}
