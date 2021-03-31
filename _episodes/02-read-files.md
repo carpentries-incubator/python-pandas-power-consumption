@@ -265,6 +265,8 @@ Name: Date, dtype: object
 
 Note as well that the data type (```dtype```) is given as ```object```, even though ```datetime``` is a data type recognized by Pandas. In order to use date information in analyses, we have to convert the data in the ```Date``` column into a recognized date format. Pandas come with functions to do this.
 
+Explain what is happening in the next code block...
+
 ~~~
 data["iso_date"] = pd.to_datetime(data["Date"], format='%d/%m/%Y')
 ~~~
@@ -294,6 +296,104 @@ Data columns (total 10 columns):
  9   iso_date               207526 non-null  datetime64[ns]
 dtypes: datetime64[ns](1), float64(7), object(2)
 memory usage: 15.8+ MB
+~~~
+{: .output}
+
+Note too that we are adding the new column but leaving the original date data intact.
+
+## Combining multiple files into a single dataframe
+
+Now that we have read a single file into our Python environment and explored its structure a little, we want to develop a process to combine all of our data files into a single dataframe.
+
+In order to do this, we need to introduce two new concepts: lists and loops.
+
+In Python a list is ...
+
+~~~
+my_list = ["orange", "yellow", "purple", "green", "red", "blue"]
+print(my_list)
+~~~
+{: .language-python}
+~~~
+['orange', 'yellow', 'purple', 'green', 'red', 'blue']
+~~~
+{: .output}
+
+We will take a more in depth look at lists in another lesson, but for now we can use the ```glob``` library that we imported earlier to create a list of the individual data files that we will combine into a single dataset.
+
+~~~
+file_list = glob.glob("*.txt")
+print(file_list)
+~~~
+{: .language-python}
+~~~
+['0_power_consumption_subset.txt', '1_power_consumption_subset.txt', '2_power_consumption_subset.txt', '3_power_consumption_subset.txt', '4_power_consumption_subset.txt', '5_power_consumption_subset.txt', '6_power_consumption_subset.txt', '7_power_consumption_subset.txt', '8_power_consumption_subset.txt', '9_power_consumption_subset.txt']
+~~~
+{: .output}
+
+The other concept is a loop, or more specifically in this case a _for_ loop. What that is...
+
+Syntax of a for loop...
+
+For example, now that we have a list of filenames of our data files, we can print them using a for loop.
+
+~~~
+for file in file_list:
+    print(file)
+~~~
+{: .language-python}
+~~~
+0_power_consumption_subset.txt
+1_power_consumption_subset.txt
+2_power_consumption_subset.txt
+3_power_consumption_subset.txt
+4_power_consumption_subset.txt
+5_power_consumption_subset.txt
+6_power_consumption_subset.txt
+7_power_consumption_subset.txt
+8_power_consumption_subset.txt
+9_power_consumption_subset.txt
+~~~
+{: .output}
+
+More pragmatically, we can use the ```concat()``` function in Pandas in combination with a ```for``` loop to combine the files in our list.
+
+~~~
+# Start by reading the first file
+
+master_data = pd.read_csv(file_list[0])
+
+# Use a loop to concatenate the data from the other files
+
+for file in file_list:
+    new_data = pd.read_csv(file)
+    master_data = pd.concat([master_data, new_data], axis=0)
+	
+# Once the data have been concatenated, add the iso_date column
+
+master_data["iso_date"] = pd.to_datetime(master_data["Date"], format='%d/%m/%Y')
+
+print(master_data.info())
+~~~
+{: .language-python}
+~~~
+<class 'pandas.core.frame.DataFrame'>
+Int64Index: 2282785 entries, 0 to 207524
+Data columns (total 10 columns):
+ #   Column                 Dtype         
+---  ------                 -----         
+ 0   Date                   object        
+ 1   Time                   object        
+ 2   Global_active_power    float64       
+ 3   Global_reactive_power  float64       
+ 4   Voltage                float64       
+ 5   Global_intensity       float64       
+ 6   Sub_metering_1         float64       
+ 7   Sub_metering_2         float64       
+ 8   Sub_metering_3         float64       
+ 9   iso_date               datetime64[ns]
+dtypes: datetime64[ns](1), float64(7), object(2)
+memory usage: 191.6+ MB
 ~~~
 {: .output}
 
