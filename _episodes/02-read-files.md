@@ -397,4 +397,85 @@ memory usage: 191.6+ MB
 ~~~
 {: .output}
 
+
+> ## Challenge: Separating Dates into Columns
+>
+> It can be useful in a variety of contexts to split date data into multiple columns, 
+> with one column for the year, one for the month, and another for the day. This can
+> facilitate filtering or ordering by date in systems like SQLite, for example, that
+> don't by default have a date data type.
+>
+> Given the lines of code below, put them in the correct order to read the data
+> file "1\_power\_consumption\_subset.txt" and split the "Date" column into
+> three new columns for "year," "month," and "day."
+>
+> ~~~
+> data["day"] = pd.to_datetime(data["Date"], format='%d/%m/%Y').dt.day)
+>
+> data["year"] = pd.to_datetime(data["Date"], format='%d/%m/%Y').dt.year)
+>
+> data = pd.read_csv(1_power_consumption_subset.txt)
+>
+> data["month"] = pd.to_datetime(data["Date"], format='%d/%m/%Y').dt.month)
+> ~~~
+> {: .language-python}
+>
+> > ## Solution
+> > ~~~
+> > data = pd.read_csv(1_power_consumption_subset.txt)
+> >
+> > data["year"] = pd.to_datetime(data["Date"], format='%d/%m/%Y').dt.year)
+> >
+> > data["month"] = pd.to_datetime(data["Date"], format='%d/%m/%Y').dt.month)
+> >
+> > data["day"] = pd.to_datetime(data["Date"], format='%d/%m/%Y').dt.day)
+> > ~~~
+> > {: .output}
+> {: .solution}
+{: .challenge}
+
+
+> ## Challenge: Different Ways of Doing the Same Thing
+>
+> In the code that we wrote earlier to concatenate our data files into a single
+> data frame, we combined all of the data in a "master\_data" data frame using
+> a for loop. Then, once the loop was finished, we created the "iso\_date"
+> column for all of the data at once.
+>
+> An alternative approach would be to create the "iso\_date" column for each
+> file's data before concatenating. Given the lines of code below, put them
+> in the correct order to add the "iso\_date" column for each file before 
+> appending or concatenating the data to the "master\_data" data frame.
+>
+> ~~~
+> master_data = pd.read_csv(file_list[0])
+>
+> file_list = glob.glob("*.txt")
+>
+> for file in file_list:
+>     master_data = pd.concat([master_data, new_data], axis=0)
+>     new_data["iso_date"] = pd.to_datetime(new_data["Date"], format='%d/%m/%Y')
+>     new_data = pd.read_csv(file)
+>
+> master_data["iso_date"] = pd.to_datetime(master_data["Date"], format='%d/%m/%Y')
+> ~~~
+> {: .language-python}
+>
+> > ## Solution
+> > ~~~
+> > master_data = pd.read_csv(file_list[0])
+> >
+> > master_data["iso_date"] = pd.to_datetime(master_data["Date"], format='%d/%m/%Y')
+> >
+> > for file in file_list:
+> >     new_data = pd.read_csv(file)
+> >     new_data["iso_date"] = pd.to_datetime(new_data["Date"], format='%d/%m/%Y')
+> >     master_data = pd.concat([master_data, new_data], axis=0)
+> > ~~~
+> > {: .output}
+> {: .solution}
+>
+> What are the advantages or disadvantages to doing it this way?
+{: .challenge}
+
 {% include links.md %}
