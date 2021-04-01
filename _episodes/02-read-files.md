@@ -463,6 +463,8 @@ memory usage: 191.6+ MB
 >
 > > ## Solution
 > > ~~~
+> > file_list = glob.glob("*.txt)
+> >
 > > master_data = pd.read_csv(file_list[0])
 > >
 > > master_data["iso_date"] = pd.to_datetime(master_data["Date"], format='%d/%m/%Y')
