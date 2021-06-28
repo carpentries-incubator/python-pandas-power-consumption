@@ -1,5 +1,5 @@
 ---
-title: "Navigating Tabular Data with PANDAS"
+title: "Describing Tabular Data with PANDAS"
 teaching: 30
 exercises: 15
 questions:
