@@ -46,8 +46,8 @@ and to meet some of our community members.
 ## Where to Contribute
 
 1.  If you wish to change this lesson,
-    please work in <https://github.com/swcarpentry/FIXME>,
-    which can be viewed at <https://swcarpentry.github.io/FIXME>.
+    please work in https://github.com/carpentries-incubator/data-management-pipelines-engineering,
+    which can be viewed at https://carpentries-incubator.github.io/data-management-pipelines-engineering/.
 
 2.  If you wish to change the example lesson,
     please work in <https://github.com/carpentries/lesson-example>,
@@ -85,16 +85,7 @@ so fresh eyes are always welcome.
 
 ## What *Not* to Contribute
 
-Our lessons already contain more material than we can cover in a typical workshop,
-so we are usually *not* looking for more concepts or tools to add to them.
-As a rule,
-if you want to introduce a new idea,
-you must (a) estimate how long it will take to teach
-and (b) explain what you would take out to make room for it.
-The first encourages contributors to be honest about requirements;
-the second, to think hard about priorities.
-
-We are also not looking for exercises or other material that only run on one platform.
+We are not looking for exercises or other material that only run on one platform.
 Our workshops typically contain a mixture of Windows, macOS, and Linux users;
 in order to be usable,
 our lessons must run equally well on all three.
