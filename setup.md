@@ -4,22 +4,22 @@ title: Setup
 
 > ## Data
 >
-> **Download** this data file to your computer: [https://archive.ics.uci.edu/ml/machine-learning-databases/00235/household_power_consumption.zip](https://archive.ics.uci.edu/ml/machine-learning-databases/00235/household_power_consumption.zip) 
+> **Download** this data file to your computer: [https://datadryad.org/stash/downloads/file_stream/494778](https://datadryad.org/stash/downloads/file_stream/494778) 
 >
 > #### About the data
-> The dataset this lesson is being designed to use is still being processed 
-> for public release. In the interim, the lesson uses a dataset that is 
-> similar in structure and content.
+> The dataset this lesson consists of power consumption data from the 
+> Los Alamos Public Utility Department (LADPU) in Los Alamos, New Mexico,
+> USA. The data are provided in original format, and have only been 
+> processed to anonymize consumer information. The data contain
+> missing and duplicate values.
 >
-> The data for this lesson is from the University of California at Irvine's
-> _Machine Learning Repository:_ 
-> [https://archive.ics.uci.edu/ml/index.php](https://archive.ics.uci.edu/ml/index.php)
-> and are adapted from the _Individual household electric power consumption Data Set_, 
-> which has been made available with a CC-BY 4.0 license:
+> The dataset for this lesson is available from Dyrad, _LADPU Smart Meter Data_,
+> [https://doi.org/10.5061/dryad.m0cfxpp2c](https://doi.org/10.5061/dryad.m0cfxpp2c)
+> and has been made available with a CC-0 license:
 > 
-> > Hebrail, G., Berard, A. (2012). Individual household electric power consumption 
-> > Data Set. Machine Learning Repository, University of California, Irvine.
-> > [https://archive.ics.uci.edu/ml/datasets/individual+household+electric+power+consumption](https://archive.ics.uci.edu/ml/datasets/individual+household+electric+power+consumption)
+> > Souza, Vinicius; Estrada, Trilce; Bashir, Adnan; Mueen, Abdullah (2020), 
+> > _LADPU Smart Meter Data_, Dryad, Dataset, 
+> > [https://doi.org/10.5061/dryad.m0cfxpp2c](https://doi.org/10.5061/dryad.m0cfxpp2c)
 {: .prereq}
 
 {% include links.md %}
