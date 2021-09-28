@@ -33,7 +33,7 @@ import glob
 ## Reading files
 
 ~~~
-data = pd.read_csv("0_power_consumption_subset.txt")
+data = pd.read_csv("1003.csv")
 ~~~
 {: .language-python}
 
@@ -57,14 +57,14 @@ print(type(data))
 
 We can get information about the data by requesting its attributes or using functions.
 
-Use the ```shape`` attribute to see the size in rows and columns.
+Use the ```shape``` attribute to see the size in rows and columns.
 
 ~~~
 print(data.shape)
 ~~~
 {: .language-python}
 ~~~
-(207526, 9)
+(226752, 5)
 ~~~
 {: .output}
 
@@ -75,15 +75,11 @@ print(data.dtypes)
 ~~~
 {: .language-python}
 ~~~
-Date                      object
-Time                      object
-Global_active_power      float64
-Global_reactive_power    float64
-Voltage                  float64
-Global_intensity         float64
-Sub_metering_1           float64
-Sub_metering_2           float64
-Sub_metering_3           float64
+METER_FID          int64
+START_READ       float64
+END_READ         float64
+INTERVAL_TIME     object
+INTERVAL_READ    float64
 dtype: object
 ~~~
 {: .output}
@@ -91,7 +87,7 @@ dtype: object
 We can limit the above to a single column.
 
 ~~~
-print(data.Voltage.dtypes)
+print(data.START_READ.dtypes)
 ~~~
 {: .language-python}
 ~~~
@@ -99,7 +95,7 @@ dtype('float64')
 ~~~
 {: .output}
 
-```shape``` and ```dtypes`` are two examples of attributes.
+```shape``` and ```dtypes``` are two examples of attributes.
 
 We can also use functions or methods to see information about the dataframe.
 
@@ -111,41 +107,36 @@ print(data.info())
 {: .language-python}
 ~~~
 <class 'pandas.core.frame.DataFrame'>
-RangeIndex: 207526 entries, 0 to 207525
-Data columns (total 9 columns):
- #   Column                 Non-Null Count   Dtype  
----  ------                 --------------   -----  
- 0   Date                   207526 non-null  object 
- 1   Time                   207526 non-null  object 
- 2   Global_active_power    203794 non-null  float64
- 3   Global_reactive_power  203794 non-null  float64
- 4   Voltage                203794 non-null  float64
- 5   Global_intensity       203794 non-null  float64
- 6   Sub_metering_1         203794 non-null  float64
- 7   Sub_metering_2         203794 non-null  float64
- 8   Sub_metering_3         203794 non-null  float64
-dtypes: float64(7), object(2)
-memory usage: 14.2+ MB
+RangeIndex: 226752 entries, 0 to 226751
+Data columns (total 5 columns):
+ #   Column         Non-Null Count   Dtype  
+---  ------         --------------   -----  
+ 0   METER_FID      226752 non-null  int64  
+ 1   START_READ     226752 non-null  float64
+ 2   END_READ       226752 non-null  float64
+ 3   INTERVAL_TIME  226752 non-null  object 
+ 4   INTERVAL_READ  226656 non-null  float64
+dtypes: float64(3), int64(1), object(1)
+memory usage: 8.7+ MB
 None
 ~~~
 {: .output}
 
 Note that ```info()``` prints out all of the information we got from the ```type()``` function and the ```shape``` and ```dtypes``` attributes. 
 
-We can also inspect some rows of data. Since the table is large - 207,526 rows - we may only want to look at the first few or the last few rows. To do this, we can use the ```head()``` and ````tail()``` functions, respectively.
+We can also inspect some rows of data. Since the table is large - 226,752 rows - we may only want to look at the first few or the last few rows. To do this, we can use the ```head()``` and ```tail()``` functions, respectively.
 
 ~~~
 print(data.head())
 ~~~
 {: .language-python}
 ~~~
-         Date      Time  ...  Sub_metering_2  Sub_metering_3
-0  16/12/2006  17:24:00  ...             1.0            17.0
-1  16/12/2006  17:25:00  ...             1.0            16.0
-2  16/12/2006  17:26:00  ...             2.0            17.0
-3  16/12/2006  17:27:00  ...             1.0            17.0
-4  16/12/2006  17:28:00  ...             1.0            17.0
-[5 rows x 9 columns]
+   METER_FID  START_READ  END_READ         INTERVAL_TIME  INTERVAL_READ
+0       1003     332.308   374.561  13-JUL-2013 00:15:00         0.4098
+1       1003     332.308   374.561  13-JUL-2013 00:30:00         0.1548
+2       1003     332.308   374.561  13-JUL-2013 00:45:00         0.3168
+3       1003     332.308   374.561  13-JUL-2013 01:00:00         0.3084
+4       1003     332.308   374.561  13-JUL-2013 01:15:00         0.1320
 ~~~
 {: .output}
 
@@ -154,19 +145,16 @@ print(data.tail())
 ~~~
 {: .language-python}
 ~~~
-Date      Time  ...  Sub_metering_2  Sub_metering_3
-207521  9/5/2007  20:05:00  ...             0.0            16.0
-207522  9/5/2007  20:06:00  ...             0.0            17.0
-207523  9/5/2007  20:07:00  ...             0.0            17.0
-207524  9/5/2007  20:08:00  ...             0.0            17.0
-207525  9/5/2007  20:09:00  ...             0.0            17.0
-[5 rows x 9 columns]
+        METER_FID  START_READ   END_READ         INTERVAL_TIME  INTERVAL_READ
+226747       1003   56868.876  56897.653  31-DEC-2019 23:00:00         0.2592
+226748       1003   56868.876  56897.653  31-DEC-2019 23:15:00         0.2820
+226749       1003   56868.876  56897.653  31-DEC-2019 23:30:00         0.4464
+226750       1003   56868.876  56897.653  31-DEC-2019 23:45:00         0.4626
+226751       1003   56868.876  56897.653  01-JAN-2020 00:00:00         0.4662
 ~~~
 {: .output}
 
-Note that the printed rows are truncated - the three ellipses in the output indicate that some rows have been excluded from the printout.
-
-So far all of the functions we've used have been called using default arugments. For example, by default ```head()``` and ```tail()``` will
+So far we have called all of the functions using default arugments. For example, by default ```head()``` and ```tail()``` will
 print the first or last five rows. If we want to view more (or fewer) rows, we can pass the number of rows as an argument. If for example
 we wanted to see the first ten rows of data, we would pass that number as the argument:
 
@@ -175,31 +163,30 @@ print(data.head(10))
 ~~~
 {: .language-python}
 ~~~
-         Date      Time  ...  Sub_metering_2  Sub_metering_3
-0  16/12/2006  17:24:00  ...             1.0            17.0
-1  16/12/2006  17:25:00  ...             1.0            16.0
-2  16/12/2006  17:26:00  ...             2.0            17.0
-3  16/12/2006  17:27:00  ...             1.0            17.0
-4  16/12/2006  17:28:00  ...             1.0            17.0
-5  16/12/2006  17:29:00  ...             2.0            17.0
-6  16/12/2006  17:30:00  ...             1.0            17.0
-7  16/12/2006  17:31:00  ...             1.0            17.0
-8  16/12/2006  17:32:00  ...             1.0            17.0
-9  16/12/2006  17:33:00  ...             2.0            16.0
-[10 rows x 9 columns]
+   METER_FID  START_READ  END_READ         INTERVAL_TIME  INTERVAL_READ
+0       1003     332.308   374.561  13-JUL-2013 00:15:00         0.4098
+1       1003     332.308   374.561  13-JUL-2013 00:30:00         0.1548
+2       1003     332.308   374.561  13-JUL-2013 00:45:00         0.3168
+3       1003     332.308   374.561  13-JUL-2013 01:00:00         0.3084
+4       1003     332.308   374.561  13-JUL-2013 01:15:00         0.1320
+5       1003     332.308   374.561  13-JUL-2013 01:30:00         0.3534
+6       1003     332.308   374.561  13-JUL-2013 01:45:00         0.3318
+7       1003     332.308   374.561  13-JUL-2013 02:00:00         0.1566
+8       1003     332.308   374.561  13-JUL-2013 02:15:00         0.3318
+9       1003     332.308   374.561  13-JUL-2013 02:30:00         0.1314
 ~~~
 {: .output}
 
 > ## Challenge: Know Your Data
 >
 > Which of the following commands will output the data type
-> of the 'Global\_active\_power' column in our 'data' dataframe?
+> of the 'INTERVAL\_TIME\' column in our 'data' dataframe?
 >
 > ~~~
-> A. print(type(Global_active_power))
+> A. print(type(INTERVAL_TIME))
 > B. print(data.info())
-> C. print(data.Global_active_power.dtypes)
-> D. print(Global_active_power.dtypes)
+> C. print(data.INTERVAL_TIME.dtypes)
+> D. print(INTERVAL_TIME.dtypes)
 > ~~~
 > {: .language-python}
 >
@@ -207,7 +194,7 @@ print(data.head(10))
 > > ~~~
 > > B and C will both work. Option B prints the dtypes 
 > > for the whole dataframe. Option C prints the dtype
-> > for the Global_active_power column.
+> > for the INTERVAL_TIME column.
 > > ~~~
 > > {: .output}
 > {: .solution}
@@ -220,25 +207,25 @@ print(data.head(10))
 > for a single column:
 >
 > ~~~
-> print(data.Voltage.dtypes)
+> print(data.START_READ.dtypes)
 > ~~~
 > {: .language-python}
 > 
 > Dot notation can be used in function calls, too.
 > Which of the following commands would we use to view
-> the first 20 rows of data from the _Voltage_ column:
+> the first 20 rows of data from the *START_READ* column:
 > ~~~
-> A. print(data.Voltage.head())
-> B. print(data.Voltage.info())
-> C. print(data.head(20).Voltage)
-> D. print(data.Voltage.head(20))
+> A. print(data.START_READ.head())
+> B. print(data.START_READ.info())
+> C. print(data.head(20).START_READ)
+> D. print(data.START_READ.head(20))
 > ~~~
 > {: .language-python}
 >
 > > ## Solution
 > > ~~~
-> > Option D prints out the first 20 rows of data
-> > from the Voltage column.
+> > Options C and D print out the first 20 rows of data
+> > from the START_READ column.
 > > ~~~
 > > {: .output}
 > {: .solution}
@@ -247,28 +234,28 @@ print(data.head(10))
 
 ## Modifying data frames - adding columns
 
-If we inspect the first five rows of the ```Date``` column, we see that dates are provided in a non-standard format. This makes it difficult to do date math, create histograms, etc.
+If we inspect the first five rows of the ```INTERVAL_TIME``` column, we see that dates are provided in a long format.
 
 ~~~
-print(data.Date.head())
+print(data.INTERVAL_TIME.head())
 ~~~
 {: .language-python}
 ~~~
-0    16/12/2006
-1    16/12/2006
-2    16/12/2006
-3    16/12/2006
-4    16/12/2006
-Name: Date, dtype: object
+0    13-JUL-2013 00:15:00
+1    13-JUL-2013 00:30:00
+2    13-JUL-2013 00:45:00
+3    13-JUL-2013 01:00:00
+4    13-JUL-2013 01:15:00
+Name: INTERVAL_TIME, dtype: object
 ~~~
 {: .output}
 
-Note as well that the data type (```dtype```) is given as ```object```, even though ```datetime``` is a data type recognized by Pandas. In order to use date information in analyses, we have to convert the data in the ```Date``` column into a recognized date format. Pandas come with functions to do this.
+Note as well that the data type (```dtype```) is given as ```object```, even though ```datetime``` is a data type recognized by Pandas. In order to use date information in analyses, we can convert the data in the ```INTERVAL_TIME``` column into a recognized date format. Pandas come with functions to do this.
 
 Explain what is happening in the next code block...
 
 ~~~
-data["iso_date"] = pd.to_datetime(data["Date"], format='%d/%m/%Y')
+data["iso_date"] = pd.to_datetime(data["INTERVAL_TIME"], infer_datetime_format=True)
 ~~~
 {: .language-python}
 
@@ -280,22 +267,19 @@ print(data.info())
 {: .language-python}
 ~~~
 <class 'pandas.core.frame.DataFrame'>
-RangeIndex: 207526 entries, 0 to 207525
-Data columns (total 10 columns):
- #   Column                 Non-Null Count   Dtype         
----  ------                 --------------   -----         
- 0   Date                   207526 non-null  object        
- 1   Time                   207526 non-null  object        
- 2   Global_active_power    203794 non-null  float64       
- 3   Global_reactive_power  203794 non-null  float64       
- 4   Voltage                203794 non-null  float64       
- 5   Global_intensity       203794 non-null  float64       
- 6   Sub_metering_1         203794 non-null  float64       
- 7   Sub_metering_2         203794 non-null  float64       
- 8   Sub_metering_3         203794 non-null  float64       
- 9   iso_date               207526 non-null  datetime64[ns]
-dtypes: datetime64[ns](1), float64(7), object(2)
-memory usage: 15.8+ MB
+RangeIndex: 226752 entries, 0 to 226751
+Data columns (total 6 columns):
+ #   Column         Non-Null Count   Dtype         
+---  ------         --------------   -----         
+ 0   METER_FID      226752 non-null  int64         
+ 1   START_READ     226752 non-null  float64       
+ 2   END_READ       226752 non-null  float64       
+ 3   INTERVAL_TIME  226752 non-null  object        
+ 4   INTERVAL_READ  226656 non-null  float64       
+ 5   iso_date       226752 non-null  datetime64[ns]
+dtypes: datetime64[ns](1), float64(3), int64(1), object(1)
+memory usage: 10.4+ MB
+None
 ~~~
 {: .output}
 
@@ -322,14 +306,26 @@ print(my_list)
 We will take a more in depth look at lists in another lesson, but for now we can use the ```glob``` library that we imported earlier to create a list of the individual data files that we will combine into a single dataset.
 
 ~~~
-file_list = glob.glob("*.txt")
-print(file_list)
+file_list = glob.glob("*.csv")
+print(len(file_list))
 ~~~
 {: .language-python}
 ~~~
-['0_power_consumption_subset.txt', '1_power_consumption_subset.txt', '2_power_consumption_subset.txt', '3_power_consumption_subset.txt', '4_power_consumption_subset.txt', '5_power_consumption_subset.txt', '6_power_consumption_subset.txt', '7_power_consumption_subset.txt', '8_power_consumption_subset.txt', '9_power_consumption_subset.txt']
+1825
 ~~~
 {: .output}
+
+If we were to print out the entire list of files, the output would be too long to read. We can print a subset of the loop using index slicing.
+
+~~~
+print(file_list[0:5])
+~~~
+{: .language-python}
+~~~
+['1003.csv', '10042.csv', '10063.csv', '10175.csv', '1020.csv']
+~~~
+{: .output}
+
 
 The other concept is a loop, or more specifically in this case a _for_ loop. What that is...
 
@@ -338,25 +334,26 @@ Syntax of a for loop...
 For example, now that we have a list of filenames of our data files, we can print them using a for loop.
 
 ~~~
-for file in file_list:
+for file in file_list[0:10]:
     print(file)
 ~~~
 {: .language-python}
 ~~~
-0_power_consumption_subset.txt
-1_power_consumption_subset.txt
-2_power_consumption_subset.txt
-3_power_consumption_subset.txt
-4_power_consumption_subset.txt
-5_power_consumption_subset.txt
-6_power_consumption_subset.txt
-7_power_consumption_subset.txt
-8_power_consumption_subset.txt
-9_power_consumption_subset.txt
+1003.csv
+10042.csv
+10063.csv
+10175.csv
+1020.csv
+10211.csv
+10214.csv
+10226.csv
+10270.csv
+10274.csv
 ~~~
 {: .output}
 
 More pragmatically, we can use the ```concat()``` function in Pandas in combination with a ```for``` loop to combine the files in our list.
+Since the dataset is large, we are going to read only the first 10 files.
 
 ~~~
 # Start by reading the first file
@@ -365,35 +362,32 @@ master_data = pd.read_csv(file_list[0])
 
 # Use a loop to concatenate the data from the other files
 
-for file in file_list:
+for file in file_list[1:10]:
     new_data = pd.read_csv(file)
     master_data = pd.concat([master_data, new_data], axis=0)
 	
 # Once the data have been concatenated, add the iso_date column
 
-master_data["iso_date"] = pd.to_datetime(master_data["Date"], format='%d/%m/%Y')
+master_data["iso_date"] = pd.to_datetime(master_data["INTERVAL_TIME"], infer_datetime_format=True)
 
 print(master_data.info())
 ~~~
 {: .language-python}
 ~~~
 <class 'pandas.core.frame.DataFrame'>
-Int64Index: 2282785 entries, 0 to 207524
-Data columns (total 10 columns):
- #   Column                 Dtype         
----  ------                 -----         
- 0   Date                   object        
- 1   Time                   object        
- 2   Global_active_power    float64       
- 3   Global_reactive_power  float64       
- 4   Voltage                float64       
- 5   Global_intensity       float64       
- 6   Sub_metering_1         float64       
- 7   Sub_metering_2         float64       
- 8   Sub_metering_3         float64       
- 9   iso_date               datetime64[ns]
-dtypes: datetime64[ns](1), float64(7), object(2)
-memory usage: 191.6+ MB
+Int64Index: 2252736 entries, 0 to 226271
+Data columns (total 6 columns):
+ #   Column         Dtype         
+---  ------         -----         
+ 0   METER_FID      int64         
+ 1   START_READ     float64       
+ 2   END_READ       float64       
+ 3   INTERVAL_TIME  object        
+ 4   INTERVAL_READ  float64       
+ 5   iso_date       datetime64[ns]
+dtypes: datetime64[ns](1), float64(3), int64(1), object(1)
+memory usage: 120.3+ MB
+None
 ~~~
 {: .output}
 
@@ -406,29 +400,29 @@ memory usage: 191.6+ MB
 > don't by default have a date data type.
 >
 > Given the lines of code below, put them in the correct order to read the data
-> file "1\_power\_consumption\_subset.txt" and split the "Date" column into
+> file "1003.csv" and split the "INTERVAL_TIME" column into
 > three new columns for "year," "month," and "day."
 >
 > ~~~
-> data["day"] = pd.to_datetime(data["Date"], format='%d/%m/%Y').dt.day)
+> data["day"] = pd.to_datetime(data["INTERVAL_TIME"], infer_datetime_format=True).dt.day)
 >
-> data["year"] = pd.to_datetime(data["Date"], format='%d/%m/%Y').dt.year)
+> data["year"] = pd.to_datetime(data["INTERVAL_TIME"], infer_datetime_format=True).dt.year)
 >
-> data = pd.read_csv(1_power_consumption_subset.txt)
+> data = pd.read_csv(1003.csv)
 >
-> data["month"] = pd.to_datetime(data["Date"], format='%d/%m/%Y').dt.month)
+> data["month"] = pd.to_datetime(data["INTERVAL_TIME"], infer_datetime_format=True).dt.month)
 > ~~~
 > {: .language-python}
 >
 > > ## Solution
 > > ~~~
-> > data = pd.read_csv(1_power_consumption_subset.txt)
+> > data = pd.read_csv(1003.csv)
 > >
-> > data["year"] = pd.to_datetime(data["Date"], format='%d/%m/%Y').dt.year)
+> > data["year"] = pd.to_datetime(data["INTERVAL_TIME"], infer_datetime_format=True).dt.year)
 > >
-> > data["month"] = pd.to_datetime(data["Date"], format='%d/%m/%Y').dt.month)
+> > data["month"] = pd.to_datetime(data["INTERVAL_TIME"], infer_datetime_format=True).dt.month)
 > >
-> > data["day"] = pd.to_datetime(data["Date"], format='%d/%m/%Y').dt.day)
+> > data["day"] = pd.to_datetime(data["INTERVAL_TIME"], infer_dateteim_format=True).dt.day)
 > > ~~~
 > > {: .output}
 > {: .solution}
@@ -450,28 +444,28 @@ memory usage: 191.6+ MB
 > ~~~
 > master_data = pd.read_csv(file_list[0])
 >
-> file_list = glob.glob("*.txt")
+> file_list = glob.glob("*.csv")
 >
-> for file in file_list:
+> for file in file_list[1:10]:
 >     master_data = pd.concat([master_data, new_data], axis=0)
->     new_data["iso_date"] = pd.to_datetime(new_data["Date"], format='%d/%m/%Y')
+>     new_data["iso_date"] = pd.to_datetime(new_data["INTERVAL_TIME"], infer_datetime_format=True)
 >     new_data = pd.read_csv(file)
 >
-> master_data["iso_date"] = pd.to_datetime(master_data["Date"], format='%d/%m/%Y')
+> master_data["iso_date"] = pd.to_datetime(master_data["INTERVAL_TIME"], infer_datetime_format=True)
 > ~~~
 > {: .language-python}
 >
 > > ## Solution
 > > ~~~
-> > file_list = glob.glob("*.txt)
+> > file_list = glob.glob("*.csv)
 > >
 > > master_data = pd.read_csv(file_list[0])
 > >
-> > master_data["iso_date"] = pd.to_datetime(master_data["Date"], format='%d/%m/%Y')
+> > master_data["iso_date"] = pd.to_datetime(master_data["INTERVAL_TIME"], infer_datetime_format=True)
 > >
-> > for file in file_list:
+> > for file in file_list[1:10]:
 > >     new_data = pd.read_csv(file)
-> >     new_data["iso_date"] = pd.to_datetime(new_data["Date"], format='%d/%m/%Y')
+> >     new_data["iso_date"] = pd.to_datetime(new_data["INTERVAL_TIME"], infer_datetime_format=True)
 > >     master_data = pd.concat([master_data, new_data], axis=0)
 > > ~~~
 > > {: .output}
