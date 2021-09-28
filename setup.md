@@ -10,7 +10,7 @@ title: Setup
 > The dataset this lesson consists of power consumption data from the 
 > Los Alamos Public Utility Department (LADPU) in Los Alamos, New Mexico,
 > USA. The data are provided in original format, and have only been 
-> processed to anonymize consumer information. The data contain
+> processed to remove consumer information. The data contain
 > missing and duplicate values.
 >
 > The dataset for this lesson is available from Dyrad, _LADPU Smart Meter Data_,
