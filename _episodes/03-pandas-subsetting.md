@@ -17,7 +17,7 @@ Pandas is designed to work with large datasets. Multiple indexing features allow
 
 The axes of a dataframe are the rows and columns. Both rows and column labels are indexed when a dataframe is created, such as when reading a CSV file into memory. This allows for quick selection of specific rows, columns, or cells, either through slicing or subsetting a dataframe by filtering values according to specific criteria.
 
-It's important to keep some of this terminology clear, because in addition to _indexing_ rows and column labels, Pandas creates an _index_ of row labels for every dataframe. This index can be specified when the dataframe is created, or alternatively Pandas will create an integer based index of row labels by default.
+It's important to keep this terminology clear, because in addition to _indexing_ rows and column labels, Pandas creates an _index_ of row labels for every dataframe. This index can be specified when the dataframe is created, or alternatively Pandas will create an integer based index of row labels by default.
 
 We can demonstrate this by reading a single file from our dataset. First, let's load the libraries we will use for this episode.
 
@@ -27,12 +27,12 @@ import glob
 ~~~
 {: .language-python}
 
-Next we use the ```glob()``` function to create a list of files. Then we read the first file in the list into a new dataframe.
+Next we use the ```glob()``` function to create a list of files. Then we read the first file in the list into a new dataframe. We will also use the ```info()``` function to look at the structure of our dataframe.
 
 ~~~
 file_list = glob.glob("./lesson_data/*.csv")
 df = pd.read_csv(file_list[0])
-df.info()
+print(df.info())
 ~~~
 {: .language-python}
 ~~~
@@ -52,5 +52,137 @@ memory usage: 67.6+ KB
 ~~~
 {: .ouput}
 
+We can use the ```axes``` attribute to inspect the row and column indices. The output gives the row index first, and the column index second.
+
+~~~
+print(df.axes)
+~~~
+{: .language-python}
+~~~
+[RangeIndex(start=0, stop=1440, step=1), Index(['METER_FID', 'START_READ', 'END_READ', 'INTERVAL_TIME', 'INTERVAL_READ',
+       'date'],
+      dtype='object')]
+~~~
+{: .output}
+
+The output above is a list, and the row index of our dataframe is the first object in the list:
+
+~~~
+RangeIndex(start=0, stop=1440, step=1)
+~~~
+{: .language-python}
+
+This means that our rows are indexed or labeled using incremented integers, beginning with the first row labeled 0 and the last row labeled 1439. Recall that Python uses zero-indexing, so the ```stop``` value in the RangeIndex should be understood as "up to but not including 1440." We can confirm this by referring to the output of the ```info()``` function above, which states that the dataframe index has 1440 _entries_, labeled from 0 to 1439.
+
+The second object in the list output by printing the dataframe's ```axes``` attribute is the column index. By default, the items in this index will be the column names, which can also be understood as the column axis labels.
+
+~~~
+Index(['METER_FID', 'START_READ', 'END_READ', 'INTERVAL_TIME', 'INTERVAL_READ',
+       'date']
+~~~
+{: .language-python}
+
+We can see the row labels using the ```head()``` function. Note that there is no column name for the row index. This is because there was no source column in our CSV file that the row labels refer to. We will update the attributes of the row index below.
+
+~~~
+df.head()
+~~~
+{: .language-python}
+~~~
+	METER_FID 	START_READ 	END_READ 	INTERVAL_TIME 	INTERVAL_READ 	date
+0 	10063 	15685.143 	15704.015 	19-DEC-2015 00:00:00 	0.1596 	2015-12-19
+1 	10063 	15704.015 	15726.103 	19-DEC-2015 00:15:00 	0.1782 	2015-12-19
+2 	10063 	15704.015 	15726.103 	19-DEC-2015 00:30:00 	0.2172 	2015-12-19
+3 	10063 	15704.015 	15726.103 	19-DEC-2015 00:45:00 	0.2256 	2015-12-19
+4 	10063 	15704.015 	15726.103 	19-DEC-2015 01:00:00 	0.1512 	2015-12-19
+~~~
+{: .output}
+
+## Selecting Specific Columns
+
+If we want to select all of the values in a single column, we can use the column name.
+
+~~~
+df["date"]
+~~~
+{: .language-python}
+~~~
+0       2015-12-19
+1       2015-12-19
+2       2015-12-19
+3       2015-12-19
+4       2015-12-19
+           ...    
+1435    2016-01-02
+1436    2016-01-02
+1437    2016-01-02
+1438    2016-01-02
+1439    2016-01-02
+Name: date, Length: 1440, dtype: object
+~~~
+{: .output}
+
+In order to select multiple columns, we need to provide the column names as a list.
+
+~~~
+df[["METER_FID", "date"]]
+~~~
+{: .language-python}
+~~~
+	METER_FID 	date
+0 	10063 	2015-12-19
+1 	10063 	2015-12-19
+2 	10063 	2015-12-19
+3 	10063 	2015-12-19
+4 	10063 	2015-12-19
+... 	... 	...
+1435 	10063 	2016-01-02
+1436 	10063 	2016-01-02
+1437 	10063 	2016-01-02
+1438 	10063 	2016-01-02
+1439 	10063 	2016-01-02
+
+1440 rows × 2 columns
+~~~
+{: .output}
+
+Note that all of our output includes row labels.
+
+We can request attributes or perform operations on subsets.
+
+~~~
+df["date"].shape
+~~~
+{: .language-python}
+~~~
+(138240,)
+~~~
+{: .output}
+
+~~~
+df["INTERVAL_READ"].sum()
+~~~
+{: .language-python}
+~~~
+326.46720000000005
+~~~
+{: .output}
+
+> ## Challenge: Edit
+>
+> Edit description.
+> More text.
+> ~~~
+> Python code
+> ~~~
+> {: .language-python}
+>
+> > ## Solution
+> > ~~~
+> > output here
+> > ~~~
+> > {: .output}
+> {: .solution}
+{: .challenge}
 
 {% include links.md %}
