@@ -168,18 +168,43 @@ df["INTERVAL_READ"].sum()
 ~~~
 {: .output}
 
-> ## Challenge: Edit
+> ## Challenge: Find the Maximum Value of a Column
 >
-> Edit description.
-> More text.
+> In addition to getting the sum of values from a a specific column, Pandas has functions for generating other statistics. These include ```min()``` for the minimum value within a column and ```max()``` for the maximum value. 
+> 
+> Which of the below lines of code would give us the maximum values of both the "START\_READ" and "END\_READ" columns?
 > ~~~
-> Python code
+> A. print(df[START\_READ, END\_READ].max())
+> B. print(df["START\_READ", "END\_READ"].max())
+> C. print(df[[START\_READ, END\_READ]].max())
+> D. print(df[["START\_READ", "END\_READ"]].max())
 > ~~~
 > {: .language-python}
 >
 > > ## Solution
 > > ~~~
-> > output here
+> > Option D prints out the maximum value of the columns.
+> > ~~~
+> > {: .output}
+> {: .solution}
+{: .challenge}
+
+> ## Challenge: Perform Operations on Specific Data Types
+>
+> In addition to selecting columns by name, Pandas has a ```select\_dtypes()``` method that lets us select columns of a specific data type. 
+> 
+> Which of the options below will print out the sum of each column with a ```float``` data type?
+> ~~~
+> A. print(df.select\_dtypes(float).sum())
+> B. print(df.select\_dtypes([["START_READ", "END\_READ", "INTERVAL\_READ"]]).sum())
+> C. print(df[["START\_READ", "END\_READ", "INTERVAL\_READ"]].sum())
+> D. print(df.sum(select\_dtypes(float))
+> ~~~
+> {: .language-python}
+>
+> > ## Solution
+> > ~~~
+> > Both A and C will output the correct result. However, option C requires us to already know that those columns have data of the correct data type. 
 > > ~~~
 > > {: .output}
 > {: .solution}
