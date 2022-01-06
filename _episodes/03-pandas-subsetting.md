@@ -174,10 +174,10 @@ df["INTERVAL_READ"].sum()
 > 
 > Which of the below lines of code would give us the maximum values of both the "START\_READ" and "END\_READ" columns?
 > ~~~
-> A. print(df[START\_READ, END\_READ].max())
-> B. print(df["START\_READ", "END\_READ"].max())
-> C. print(df[[START\_READ, END\_READ]].max())
-> D. print(df[["START\_READ", "END\_READ"]].max())
+> A. print(df[START_READ, END_READ].max())
+> B. print(df["START_READ", "END_READ"].max())
+> C. print(df[[START_READ, END_READ]].max())
+> D. print(df[["START_READ", "END_READ"]].max())
 > ~~~
 > {: .language-python}
 >
@@ -195,10 +195,10 @@ df["INTERVAL_READ"].sum()
 > 
 > Which of the options below will print out the sum of each column with a ```float``` data type?
 > ~~~
-> A. print(df.select\_dtypes(float).sum())
-> B. print(df.select\_dtypes([["START_READ", "END\_READ", "INTERVAL\_READ"]]).sum())
-> C. print(df[["START\_READ", "END\_READ", "INTERVAL\_READ"]].sum())
-> D. print(df.sum(select\_dtypes(float))
+> A. print(df.select_dtypes(float).sum())
+> B. print(df.select_dtypes([["START_READ", "END_READ", "INTERVAL_READ"]]).sum())
+> C. print(df[["START_READ", "END_READ", "INTERVAL_READ"]].sum())
+> D. print(df.sum(select_dtypes(float))
 > ~~~
 > {: .language-python}
 >
