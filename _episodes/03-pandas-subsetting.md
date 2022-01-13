@@ -210,4 +210,70 @@ df["INTERVAL_READ"].sum()
 > {: .solution}
 {: .challenge}
 
+## Selecting Specific Rows
+
+Subsets of rows of a Pandas dataframe can be selected different ways. The first two methods we'll look at, ```.loc``` and ```.iloc``` indexing, have some subtle differences that are worth exploring.
+
+```.loc``` indexing will select rows with specific _labels_. Recall from earlier that when we read our CSV file into a dataframe, a row index was created which used integers as the label for each row. We can see information about the row index using the dataframe's ```index``` attribute.
+
+~~~
+print(df.index)
+~~~
+{: .language-python}
+~~~
+RangeIndex(start=0, stop=1440, step=1)
+~~~
+{: .output}
+
+To select a specific row using ```.loc```, we need to know the label of the index. In this case, the labels start with 0 and go up to 1439, so if we want to select the first row we use the first index label. In this cast that is 0.
+
+~~~
+print(df.loc[0])
+~~~
+{: .language-python}
+~~~
+METER_FID                       10063
+START_READ                  15685.143
+END_READ                    15704.015
+INTERVAL_TIME    19-DEC-2015 00:00:00
+INTERVAL_READ                  0.1596
+date                       2015-12-19
+Name: 0, dtype: object
+~~~
+{: .output}
+
+Note that above we said the label of the last row is 1439, even though the ```stop``` value of the index attribute is 1440. That is because default row indexing uses zero-indexing, which is common for Python data structures. The ```stop``` value given above should be understood as  _up to but not including_. We can demonstrate this by trying to use the label 1440 to select a row:
+
+~~~
+print("last row:")
+print(df.loc[1439])
+print("\nindex error:")
+print(df.loc[1440])
+~~~
+{: .language-python}
+~~~
+last row:
+METER_FID             10063
+START_READ        16006.595
+END_READ          16030.496
+INTERVAL_TIME     02-JAN-16
+INTERVAL_READ        0.1944
+date             2016-01-02
+Name: 1439, dtype: object
+
+index error:
+
+---------------------------------------------------------------------------
+ValueError                                Traceback (most recent call last)
+C:\ProgramData\Anaconda3\lib\site-packages\pandas\core\indexes\range.py in get_loc(self, key, method, tolerance)
+    384                 try:
+--> 385                     return self._range.index(new_key)
+    386                 except ValueError as err:
+
+ValueError: 1440 is not in range
+~~~
+{: .output}
+
+The error message in this case means that we tried to select a row using a label that is not in the index.
+
 {% include links.md %}
