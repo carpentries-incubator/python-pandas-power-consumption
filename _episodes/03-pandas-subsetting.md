@@ -276,7 +276,7 @@ ValueError: 1440 is not in range
 
 The error message in this case means that we tried to select a row using a label that is not in the index.
 
-```iloc``` is used to select a row or subset of rows based on the integer position of row indexers. This method also used zero-indexing, so integers will range from 0 to 1 less than the number of rows in the dataset. The first row would have a position integer of 0, the second row would have a position integer of 1, etc.
+```iloc``` is used to select a row or subset of rows based on the integer position of row indexers. This method also uses zero-indexing, so integers will range from 0 to 1 less than the number of rows in the dataframe. The first row would have a position integer of 0, the second row would have a position integer of 1, etc.
 
 ~~~
 print(df.iloc[0])
@@ -292,6 +292,52 @@ date                       2015-12-19
 Name: 0, dtype: object
 ~~~
 {: .output}
+
+As above, we know there are 1440 rows in our dataset but zero-indexing means that the position integer of the last row is 1439. If we try to select a row using the position integer 1440, we get the same error as before.
+
+~~~
+print(df.iloc[1440])
+~~~
+{: .language-python}
+~~~
+IndexError: single positional indexer is out-of-bounds
+~~~
+{: .output}
+
+We can also select rows using their position relative to the last row. If we want to select the last row without already knowing how many rows are in the dataframe, we can refer to its position using ```[-1]```.
+
+~~~
+print(df.iloc[-1])
+~~~
+{: .language-python}
+~~~
+METER_FID              1003
+START_READ        27957.523
+END_READ           27987.06
+INTERVAL_TIME     02-JAN-16
+INTERVAL_READ        0.4932
+date             2016-01-02
+Name: 1439, dtype: object
+~~~
+{: .output}
+
+An alternative, more roundabout way is to use the ```len()``` function. Above, we noted that position integers will range from 0 to 1 less than the number of rows in the dataframe. In combination with the ```len()``` function, we can select the last row in a dataframe using:
+
+~~~
+print(df.iloc[len(df) - 1])
+~~~
+{: .language-python}
+~~~
+METER_FID              1003
+START_READ        27957.523
+END_READ           27987.06
+INTERVAL_TIME     02-JAN-16
+INTERVAL_READ        0.4932
+date             2016-01-02
+Name: 1439, dtype: object
+~~~
+{: .output}
+
 
 
 Next: index slicing [n:n:n] and [[n:n]]
