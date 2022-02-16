@@ -338,7 +338,27 @@ Name: 1439, dtype: object
 ~~~
 {: .output}
 
-
+> ## Challenge: Selecting Cells
+>
+> Given the lines of code below, put them in the correct order to read the data file *43_dec_2015.csv* and print the starting and ending meter readings.
+> ~~~
+> print(df.iloc[0]["START_READ"])
+>
+> df = pd.read_csv("43_dec_2015.csv")
+>
+> print(df.iloc[-1]["END_READ"])
+> ~~~
+> {: .language-python}
+>
+> > ## Solution
+> > ~~~
+> df = pd.read_csv("./lesson_data/43_dec_2015.csv")
+> print(df.iloc[0]["START_READ"])
+> print(df.iloc[-1]["END_READ"])
+> > ~~~
+> > {: .output}
+> {: .solution}
+{: .challenge}
 
 Next: index slicing [n:n:n] and [[n:n]]
 
