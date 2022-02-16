@@ -276,4 +276,28 @@ ValueError: 1440 is not in range
 
 The error message in this case means that we tried to select a row using a label that is not in the index.
 
+```iloc``` is used to select a row or subset of rows based on the integer position of row indexers. This method also used zero-indexing, so integers will range from 0 to 1 less than the number of rows in the dataset. The first row would have a position integer of 0, the second row would have a position integer of 1, etc.
+
+~~~
+print(df.iloc[0])
+~~~
+{: .language-python}
+~~~
+METER_FID                        1003
+START_READ                  27326.181
+END_READ                    27362.047
+INTERVAL_TIME    19-DEC-2015 00:00:00
+INTERVAL_READ                  0.3216
+date                       2015-12-19
+Name: 0, dtype: object
+~~~
+{: .output}
+
+
+Next: index slicing [n:n:n] and [[n:n]]
+
+Next: loc and iloc index can be the same but don't have to be - can reassign loc labels
+
+Next: conditions
+
 {% include links.md %}
