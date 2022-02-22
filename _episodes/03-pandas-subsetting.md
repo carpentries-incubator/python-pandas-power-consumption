@@ -448,7 +448,85 @@ print(df[-10:])
 ~~~
 {: .output}
 
-Next: loc and iloc index can be the same but don't have to be - can reassign loc labels
+This works the same with position based indexing. It can also work for label based indexing, depending on the labels used. 
+
+~~~
+print(df.iloc[2:12:2])
+~~~
+{: .language-python}
+~~~
+	METER_FID 	START_READ 	END_READ 	INTERVAL_TIME 	INTERVAL_READ 	date
+2 	1003 	27362.047 	27419.506 	19-DEC-2015 00:30:00 	0.3252 	2015-12-19
+4 	1003 	27362.047 	27419.506 	19-DEC-2015 01:00:00 	0.2934 	2015-12-19
+6 	1003 	27362.047 	27419.506 	19-DEC-2015 01:30:00 	0.3300 	2015-12-19
+8 	1003 	27362.047 	27419.506 	19-DEC-2015 02:00:00 	0.3258 	2015-12-19
+10 	1003 	27362.047 	27419.506 	19-DEC-2015 02:30:00 	0.2766 	2015-12-19
+~~~
+{: .output}
+
+~~~
+print(df.loc[3:19:3])
+~~~
+{: .language-python}
+~~~
+ 	METER_FID 	START_READ 	END_READ 	INTERVAL_TIME 	INTERVAL_READ 	date
+3 	1003 	27362.047 	27419.506 	19-DEC-2015 00:45:00 	0.3054 	2015-12-19
+6 	1003 	27362.047 	27419.506 	19-DEC-2015 01:30:00 	0.3300 	2015-12-19
+9 	1003 	27362.047 	27419.506 	19-DEC-2015 02:15:00 	0.3216 	2015-12-19
+12 	1003 	27362.047 	27419.506 	19-DEC-2015 03:00:00 	0.2382 	2015-12-19
+15 	1003 	27362.047 	27419.506 	19-DEC-2015 03:45:00 	0.3348 	2015-12-19
+18 	1003 	27362.047 	27419.506 	19-DEC-2015 04:30:00 	0.3258 	2015-12-19
+~~~
+{: .output}
+
+We can select the values of single cells or column and row subsets by combining the methods used so far. First we specify the row index to use, then the column.
+
+~~~
+print(df.iloc[0]['INTERVAL_READ'])
+~~~
+{: .language-python}
+~~~
+0.3216
+~~~
+{: .output}
+
+We can select multiple rows and/or columns. Note that selecting multiple columns requires us to put them into a list.
+
+~~~
+print(df.iloc[:10][['INTERVAL_READ', 'date']])
+~~~
+{: .language-python}
+~~~
+   INTERVAL_READ        date
+0         0.3216  2015-12-19
+1         0.2856  2015-12-19
+2         0.3252  2015-12-19
+3         0.3054  2015-12-19
+4         0.2934  2015-12-19
+5         0.2742  2015-12-19
+6         0.3300  2015-12-19
+7         0.3078  2015-12-19
+8         0.3258  2015-12-19
+9         0.3216  2015-12-19
+~~~
+{: .output}
+
+> ## Challenge: Edit
+>
+> Edit description.
+> More text.
+> ~~~
+> Python code
+> ~~~
+> {: .language-python}
+>
+> > ## Solution
+> > ~~~
+> > output here
+> > ~~~
+> > {: .output}
+> {: .solution}
+{: .challenge}
 
 Next: conditions
 
