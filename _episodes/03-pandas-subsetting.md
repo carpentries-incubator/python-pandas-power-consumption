@@ -360,7 +360,93 @@ Name: 1439, dtype: object
 > {: .solution}
 {: .challenge}
 
-Next: index slicing [n:n:n] and [[n:n]]
+## Slicing Data
+
+So far we have used label and position based indexing to select single rows from a data frame. We can select larger subsets using index slicing. Because this is a common operation, we don't have to specify the index. 
+
+~~~
+print(df[1:10])
+~~~
+{: .language-python}
+~~~
+	METER_FID 	START_READ 	END_READ 	INTERVAL_TIME 	INTERVAL_READ 	date
+1 	1003 	27362.047 	27419.506 	19-DEC-2015 00:15:00 	0.2856 	2015-12-19
+2 	1003 	27362.047 	27419.506 	19-DEC-2015 00:30:00 	0.3252 	2015-12-19
+3 	1003 	27362.047 	27419.506 	19-DEC-2015 00:45:00 	0.3054 	2015-12-19
+4 	1003 	27362.047 	27419.506 	19-DEC-2015 01:00:00 	0.2934 	2015-12-19
+5 	1003 	27362.047 	27419.506 	19-DEC-2015 01:15:00 	0.2742 	2015-12-19
+6 	1003 	27362.047 	27419.506 	19-DEC-2015 01:30:00 	0.3300 	2015-12-19
+7 	1003 	27362.047 	27419.506 	19-DEC-2015 01:45:00 	0.3078 	2015-12-19
+8 	1003 	27362.047 	27419.506 	19-DEC-2015 02:00:00 	0.3258 	2015-12-19
+9 	1003 	27362.047 	27419.506 	19-DEC-2015 02:15:00 	0.3216 	2015-12-19
+~~~
+{: .output}
+
+When only a single colon is used in the square brackets, the integer on the left indicates the starting position. The integer on the right indicates the ending position, but here again note that the returned rows will be _up to but not including_ the row with the specified position. 
+
+By default, all rows between the starting and ending position will be returned. We can also specify a number of rows to increment over, using a second colon followed by the interval of rows to use. For example, if we want to return every other row out of the first twenty rows in the dataset, we would use the following:
+
+~~~
+print(df[0:20:2])
+~~~
+{: .language-python}
+~~~
+
+	METER_FID 	START_READ 	END_READ 	INTERVAL_TIME 	INTERVAL_READ 	date
+0 	1003 	27326.181 	27362.047 	19-DEC-2015 00:00:00 	0.3216 	2015-12-19
+2 	1003 	27362.047 	27419.506 	19-DEC-2015 00:30:00 	0.3252 	2015-12-19
+4 	1003 	27362.047 	27419.506 	19-DEC-2015 01:00:00 	0.2934 	2015-12-19
+6 	1003 	27362.047 	27419.506 	19-DEC-2015 01:30:00 	0.3300 	2015-12-19
+8 	1003 	27362.047 	27419.506 	19-DEC-2015 02:00:00 	0.3258 	2015-12-19
+10 	1003 	27362.047 	27419.506 	19-DEC-2015 02:30:00 	0.2766 	2015-12-19
+12 	1003 	27362.047 	27419.506 	19-DEC-2015 03:00:00 	0.2382 	2015-12-19
+14 	1003 	27362.047 	27419.506 	19-DEC-2015 03:30:00 	0.2592 	2015-12-19
+16 	1003 	27362.047 	27419.506 	19-DEC-2015 04:00:00 	0.3408 	2015-12-19
+18 	1003 	27362.047 	27419.506 	19-DEC-2015 04:30:00 	0.3258 	2015-12-19
+~~~
+{: .output}
+
+If we don't specify a starting or ending position, Python will default to the first and last positions, respectively. The following will output the first ten rows.
+
+~~~
+print(df[:10])
+~~~
+{: .language-python}
+~~~
+	METER_FID 	START_READ 	END_READ 	INTERVAL_TIME 	INTERVAL_READ 	date
+0 	1003 	27326.181 	27362.047 	19-DEC-2015 00:00:00 	0.3216 	2015-12-19
+1 	1003 	27362.047 	27419.506 	19-DEC-2015 00:15:00 	0.2856 	2015-12-19
+2 	1003 	27362.047 	27419.506 	19-DEC-2015 00:30:00 	0.3252 	2015-12-19
+3 	1003 	27362.047 	27419.506 	19-DEC-2015 00:45:00 	0.3054 	2015-12-19
+4 	1003 	27362.047 	27419.506 	19-DEC-2015 01:00:00 	0.2934 	2015-12-19
+5 	1003 	27362.047 	27419.506 	19-DEC-2015 01:15:00 	0.2742 	2015-12-19
+6 	1003 	27362.047 	27419.506 	19-DEC-2015 01:30:00 	0.3300 	2015-12-19
+7 	1003 	27362.047 	27419.506 	19-DEC-2015 01:45:00 	0.3078 	2015-12-19
+8 	1003 	27362.047 	27419.506 	19-DEC-2015 02:00:00 	0.3258 	2015-12-19
+9 	1003 	27362.047 	27419.506 	19-DEC-2015 02:15:00 	0.3216 	2015-12-19
+~~~
+{: .output}
+
+We can use a negative position index to return the last ten rows.
+
+~~~
+print(df[-10:])
+~~~
+{: .language-python}
+~~~
+	METER_FID 	START_READ 	END_READ 	INTERVAL_TIME 	INTERVAL_READ 	date
+1430 	1003 	27957.523 	27987.06 	02-JAN-16 	0.2586 	2016-01-02
+1431 	1003 	27957.523 	27987.06 	02-JAN-16 	0.2778 	2016-01-02
+1432 	1003 	27957.523 	27987.06 	02-JAN-16 	0.5970 	2016-01-02
+1433 	1003 	27957.523 	27987.06 	02-JAN-16 	0.5448 	2016-01-02
+1434 	1003 	27957.523 	27987.06 	02-JAN-16 	0.5202 	2016-01-02
+1435 	1003 	27957.523 	27987.06 	02-JAN-16 	0.5070 	2016-01-02
+1436 	1003 	27957.523 	27987.06 	02-JAN-16 	0.4896 	2016-01-02
+1437 	1003 	27957.523 	27987.06 	02-JAN-16 	0.4908 	2016-01-02
+1438 	1003 	27957.523 	27987.06 	02-JAN-16 	0.4872 	2016-01-02
+1439 	1003 	27957.523 	27987.06 	02-JAN-16 	0.4932 	2016-01-02
+~~~
+{: .output}
 
 Next: loc and iloc index can be the same but don't have to be - can reassign loc labels
 
