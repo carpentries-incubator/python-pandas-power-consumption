@@ -511,18 +511,21 @@ print(df.iloc[:10][['INTERVAL_READ', 'date']])
 ~~~
 {: .output}
 
-> ## Challenge: Edit
+> ## Challenge: Subsetting
 >
-> Edit description.
-> More text.
+> The frequency at which meter readings were taken means that a single day's worth of data consists of 96 rows. 
+> Which of the following lines of code would we use to select daily start and ending meter readings, plus the date for each day?
 > ~~~
-> Python code
+> A. df.loc[::96][['START_READ', 'END_READ', 'date']]
+> B. df.loc[0:1439:96]['START_READ', 'END_READ', 'date']
+> C. df.loc[::96]['START_READ', 'END_READ', 'date']
+> D. df.loc[:-1:96][['START_READ', 'END_READ', 'date']]
 > ~~~
 > {: .language-python}
 >
 > > ## Solution
 > > ~~~
-> > output here
+> > Option A returns the first row of the specified columns for each day.
 > > ~~~
 > > {: .output}
 > {: .solution}
