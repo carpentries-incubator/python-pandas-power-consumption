@@ -511,6 +511,26 @@ print(df.iloc[:10][['INTERVAL_READ', 'date']])
 ~~~
 {: .output}
 
+We can also use position indexing to select columns, with the same slicing syntax as above.
+
+~~~
+print(df.iloc[1:10, 0:2])
+~~~
+{: .language-python}
+~~~
+   METER_FID  START_READ
+1      10063   15704.015
+2      10063   15704.015
+3      10063   15704.015
+4      10063   15704.015
+5      10063   15704.015
+6      10063   15704.015
+7      10063   15704.015
+8      10063   15704.015
+9      10063   15704.015
+~~~
+{: .output}
+
 > ## Challenge: Subsetting
 >
 > The frequency at which meter readings were taken means that a single day's worth of data consists of 96 rows. 
@@ -531,6 +551,65 @@ print(df.iloc[:10][['INTERVAL_READ', 'date']])
 > {: .solution}
 {: .challenge}
 
-Next: conditions
+## Conditions
+
+There are several ways to select subsets of a data frame using conditions to select rows based on the value of specific variables. One commonly used method is boolean indexing, which returns rows for which a given condition evaluates to _True_. The following example uses the ```head()``` method to test whether the values of the "INTERVAL_READ" variable are greater than 0.16.
+
+~~~
+print(df["INTERVAL_READ"] > 0.16)
+~~~
+{: .language-python}
+~~~
+0    False
+1     True
+2     True
+3     True
+4    False
+Name: INTERVAL_READ, dtype: bool
+~~~
+{: .output}
+
+Note that we have to include the condition to be evaluated as the indexer in order to see the rows for which the condition evaluates to _True_.
+
+~~~
+print(df[df["INTERVAL_READ"] > 0.16].head())
+~~~
+{: .language-python}
+~~~
+ 	METER_FID 	START_READ 	END_READ 	INTERVAL_TIME 	INTERVAL_READ 	date
+1 	10063 	15704.015 	15726.103 	19-DEC-2015 00:15:00 	0.1782 	2015-12-19
+2 	10063 	15704.015 	15726.103 	19-DEC-2015 00:30:00 	0.2172 	2015-12-19
+3 	10063 	15704.015 	15726.103 	19-DEC-2015 00:45:00 	0.2256 	2015-12-19
+5 	10063 	15704.015 	15726.103 	19-DEC-2015 01:15:00 	0.1716 	2015-12-19
+6 	10063 	15704.015 	15726.103 	19-DEC-2015 01:30:00 	0.2370 	2015-12-19
+~~~
+{: .output}
+
+The column used for the condition does not have to be included in the subset. Selecting rows in this case requires the use of label based indexing.
+
+~~~
+print(df.loc[df["date"] == "2015-12-26", ["INTERVAL_TIME", "INTERVAL_READ"]])
+~~~
+{: .language-python}
+~~~
+            INTERVAL_TIME  INTERVAL_READ
+672  26-DEC-2015 00:00:00         0.1758
+673  26-DEC-2015 00:15:00         0.1752
+674  26-DEC-2015 00:30:00         0.1506
+675  26-DEC-2015 00:45:00         0.1632
+676  26-DEC-2015 01:00:00         0.1830
+..                    ...            ...
+763  26-DEC-2015 22:45:00         0.2046
+764  26-DEC-2015 23:00:00         0.1374
+765  26-DEC-2015 23:15:00         0.1908
+766  26-DEC-2015 23:30:00         0.2292
+767  26-DEC-2015 23:45:00         0.1944
+
+[96 rows x 2 columns]
+
+~~~
+{: .output}
+
+
 
 {% include links.md %}
