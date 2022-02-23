@@ -660,4 +660,27 @@ print(df.query('INTERVAL_READ > 0.16 and date == "2015-12-25"')[["INTERVAL_READ"
 ~~~
 {: .output}
 
+> ## Challenge: Select Intervals with Above Average Power Consumption
+>
+> The dataset used for this lesson is a subset of a much larger dataset measuring power consumption within homes in Los Alamos, New Mexico. Part of the reason for chosing the date range
+> of the subset is because there was a record-setting blizzard in the state on December 26 and 27, 2015. In later episodes in this lesson we will dig more deeply into the blizzard's
+> effect on power consumption and resulting errors or anomalies in the data, but using what we know already we can select a subset of the data to identify times of above average 
+> power consumption.
+>
+> Fill in the blanks below to select the "INTERVAL_TIME", "INTERVAL_READ", and date for all rows for which the value of the "INTERVAL_READ" variable is above the average value for 
+> that variable in the entire dataset.
+> 
+> ~~~
+> df.___[df["_________"] ___ df["INTERVAL_READ"].mean(), ["___________", "___________", "date"]]
+> ~~~
+> {: .language-python}
+>
+> > ## Solution
+> > ~~~
+> > df.loc[df["INTERVAL_READ"] > df["INTERVAL_READ"].mean(), ["INTERVAL_TIME", "INTERVAL_READ", "date"]]
+> > ~~~
+> > {: .output}
+> {: .solution}
+{: .challenge}
+
 {% include links.md %}
