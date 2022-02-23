@@ -610,6 +610,54 @@ print(df.loc[df["date"] == "2015-12-26", ["INTERVAL_TIME", "INTERVAL_READ"]])
 ~~~
 {: .output}
 
+It is possible to specify multiple conditions.
 
+~~~
+print(df[(df["INTERVAL_READ"] > 0.16) & (df["date"] == "2015-12-25")].head())
+~~~
+{: .language-python}
+~~~
+	METER_FID 	START_READ 	END_READ 	INTERVAL_TIME 	INTERVAL_READ 	date
+577 	10063 	15827.074 	15850.986 	25-DEC-2015 00:15:00 	0.1662 	2015-12-25
+578 	10063 	15827.074 	15850.986 	25-DEC-2015 00:30:00 	0.2280 	2015-12-25
+579 	10063 	15827.074 	15850.986 	25-DEC-2015 00:45:00 	0.1668 	2015-12-25
+581 	10063 	15827.074 	15850.986 	25-DEC-2015 01:15:00 	0.2112 	2015-12-25
+582 	10063 	15827.074 	15850.986 	25-DEC-2015 01:30:00 	0.2460 	2015-12-25
+~~~
+{: .output}
+
+The ```query()``` method provides similar functionality with a simplified syntax. Using the ```query()``` method, the above example becomes:
+
+~~~
+print(df.query('INTERVAL_READ > 0.16 and date == "2015-12-25"').head())
+~~~
+{: .language-python}
+~~~
+	METER_FID 	START_READ 	END_READ 	INTERVAL_TIME 	INTERVAL_READ 	date
+577 	10063 	15827.074 	15850.986 	25-DEC-2015 00:15:00 	0.1662 	2015-12-25
+578 	10063 	15827.074 	15850.986 	25-DEC-2015 00:30:00 	0.2280 	2015-12-25
+579 	10063 	15827.074 	15850.986 	25-DEC-2015 00:45:00 	0.1668 	2015-12-25
+581 	10063 	15827.074 	15850.986 	25-DEC-2015 01:15:00 	0.2112 	2015-12-25
+582 	10063 	15827.074 	15850.986 	25-DEC-2015 01:30:00 	0.2460 	2015-12-25
+~~~
+{: .output}
+
+Note in this case that the conditions are passed as a string to the query. This requires us to pay close attention to consistent use of single and double quotes.
+
+We can also select specific columns when using the ```query()``` method.
+
+~~~
+print(df.query('INTERVAL_READ > 0.16 and date == "2015-12-25"')[["INTERVAL_READ","date"]].head())
+~~~
+{: .language-python}
+~~~
+	INTERVAL_READ 	date
+577 	0.1662 	2015-12-25
+578 	0.2280 	2015-12-25
+579 	0.1668 	2015-12-25
+581 	0.2112 	2015-12-25
+582 	0.2460 	2015-12-25
+~~~
+{: .output}
 
 {% include links.md %}
