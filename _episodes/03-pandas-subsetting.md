@@ -8,7 +8,8 @@ objectives:
 - "Understand how Pandas indexes data."
 - "Subset dataframes using index positions and filtering criteria."
 keypoints:
-- "..."
+- "Rows can be selected in Pandas using label or position based indexing."
+- "Boolean indexing and the ```query()``` method can be used to select subsets of a dataframe using conditions."
 ---
 
 Pandas is designed to work with large datasets. Multiple indexing features allow for quick subsetting and filtering of data.
