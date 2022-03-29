@@ -6,7 +6,7 @@ questions:
 - "How can we summarize large datasets?"
 objectives:
 - "Summarize large datasets using descriptive statistics."
-- "Perform operations to identify outliers and missing values in tabular data ."
+- "Perform operations to identify outliers and missing values in tabular data."
 - "Visualize data with plots."
 - "Need an objective about grouping."
 keypoints:
