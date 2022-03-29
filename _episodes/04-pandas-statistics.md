@@ -86,6 +86,53 @@ None
 
 Note that the *date* field in the dataset is not in the original raw data, but was added as pre-processing for this tutorial using a process described in a previous episode.
 
+Next we create a loop to append the other files in the list to our dataframe. Since we have already read the first file into the dataframe, we will use index slicing to iterate on the file list beginning with the second item in the list.
+
+~~~
+for f in flist[1:]:
+    df = df.append(pd.read_csv(f))
+
+print(df.info())
+~~~
+{: .language-python}
+~~~
+<class 'pandas.core.frame.DataFrame'>
+Int64Index: 273600 entries, 0 to 1439
+Data columns (total 6 columns):
+ #   Column         Non-Null Count   Dtype  
+---  ------         --------------   -----  
+ 0   METER_FID      273600 non-null  object 
+ 1   START_READ     273600 non-null  float64
+ 2   END_READ       273600 non-null  float64
+ 3   INTERVAL_TIME  273600 non-null  object 
+ 4   INTERVAL_READ  273600 non-null  float64
+ 5   date           273600 non-null  object 
+dtypes: float64(3), object(3)
+memory usage: 14.6+ MB
+~~~
+{: .output}
+
+The output of the ```info()``` method above indicates that three of the columns in the dataframe have numeric data types: "START\_READ", "END\_READ", and "INTERVAL\_READ". By default, Pandas will calculate descriptive statistics for numeric data types within a dataset.
+
+~~~
+print(df.describe())
+~~~
+{: .language-python}
+~~~
+
+	    START_READ 	    END_READ 	    INTERVAL_READ
+count 	273600.000000 	273600.000000 	273600.000000
+mean 	17144.337763 	17169.473211 	0.261822
+std 	10304.468357 	10318.573027 	0.270579
+min 	658.789000 	    661.687000 	    0.000000
+25% 	9872.956000 	9882.920000 	0.090000
+50% 	15800.545000 	15827.074000 	0.171600
+75% 	22730.634000 	22752.376000 	0.336000
+max 	52071.944000 	52158.061000 	3.232200
+~~~
+{: .output}
+
+Since the values for "START\_READ" and "END\_READ" are calculated across two hundred different meters, those statistics may not be useful or of interest. Without grouping or otherwise manipulating the data, the only statistics that are interesting in the aggregate are for the "INTERVAL\_READ"
 
 
 {% include links.md %}
