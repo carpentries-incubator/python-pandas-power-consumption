@@ -132,7 +132,87 @@ max 	52071.944000 	52158.061000 	3.232200
 ~~~
 {: .output}
 
-Since the values for "START\_READ" and "END\_READ" are calculated across two hundred different meters, those statistics may not be useful or of interest. Without grouping or otherwise manipulating the data, the only statistics that are interesting in the aggregate are for the "INTERVAL\_READ"
+Since the values for "START\_READ" and "END\_READ" are calculated across two hundred different meters, those statistics may not be useful or of interest. Without grouping or otherwise manipulating the data, the only statistics that are interesting in the aggregate are for the "INTERVAL\_READ" variable. This is the variable that measures actual power consumption per time intervals of 15 minutes.
+
+We can view the descriptive statistics for a single column:
+
+~~~
+print(df["INTERVAL_READ"].describe())
+~~~
+{: .language-python}
+~~~
+count    273600.000000
+mean          0.261822
+std           0.270579
+min           0.000000
+25%           0.090000
+50%           0.171600
+75%           0.336000
+max           3.232200
+Name: INTERVAL_READ, dtype: float64
+~~~
+{: .output}
+
+We notice the maximum interval reading is way above the 75% range. For a closer inspection of high readings, we can also specify percentiles.
+
+~~~
+df["INTERVAL_READ"].describe(percentiles = [0.75, 0.85, 0.95, 0.99])
+~~~
+{: .language-python}
+~~~
+count    273600.000000
+mean          0.261822
+std           0.270579
+min           0.000000
+50%           0.171600
+75%           0.336000
+85%           0.477600
+95%           0.837000
+99%           1.272600
+max           3.232200
+Name: INTERVAL_READ, dtype: float64
+~~~
+{: .output}
+
+There seem to be some meter readings that are unusually high. We will investgate this in more detail below.
+
+First, let's look at descriptive statistics that Pandas provides for non-numeric data types. Even through these are excluded by default, they can still be calculated using the ```include="all"``` argument.
+
+~~~
+df.describe(include="all")
+~~~
+{: .language-python}
+~~~
+        METER_FID     START_READ       END_READ INTERVAL_TIME  INTERVAL_READ  \
+count    273600.0  273600.000000  273600.000000        273600  273600.000000   
+unique      189.0            NaN            NaN          1251            NaN   
+top       10862.0            NaN            NaN     02-JAN-16            NaN   
+freq       2880.0            NaN            NaN         18240            NaN   
+mean          NaN   17144.337763   17169.473211           NaN       0.261822   
+std           NaN   10304.468357   10318.573027           NaN       0.270579   
+min           NaN     658.789000     661.687000           NaN       0.000000   
+25%           NaN    9872.956000    9882.920000           NaN       0.090000   
+50%           NaN   15800.545000   15827.074000           NaN       0.171600   
+75%           NaN   22730.634000   22752.376000           NaN       0.336000   
+max           NaN   52071.944000   52158.061000           NaN       3.232200   
+
+              date  
+count       273600  
+unique          15  
+top     2015-12-19  
+freq         18240  
+mean           NaN  
+std            NaN  
+min            NaN  
+25%            NaN  
+50%            NaN  
+75%            NaN  
+max            NaN  
+~~~
+{: .output}
+
+Most statistics are excluded for non-numeric data types, but Pandas does provide information about the total number of observations, the number of uniquely occuring values, the most commonly occuring value, and the number of time the most commonly occuring value appears in the dataset.
+
 
 
 {% include links.md %}
