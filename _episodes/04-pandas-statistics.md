@@ -15,7 +15,7 @@ keypoints:
 
 Metadata provided with the published Los Alamos Public Utility Department Smart Meter dataset at Dryad <https://doi.org/10.5061/dryad.m0cfxpp2c> indicates that aside from de-identification the data have not been pre-processed or normalized and may include missing data, duplicate entries. 
 
-The full dataset is too large for this tutorial format. The subset used includes data from two hundred smart meters, recorded between December 19, 2015 and January 2, 2016. The full dataset includes ... [this info should go in the setup, too]. The two hundred meters used for the lesson subset were randomly selected. The date range was chosen because it includes the week before and after a major holiday that coincided with a blizzard. 
+The full dataset is too large for this tutorial format. The subset used includes data from two hundred smart meters, recorded between December 19, 2015 and January 2, 2016. The full dataset includes data from 1825 meters and covers a timespan from July, 2013 through December, 2019. The two hundred meters used for the lesson subset were randomly selected. The date range was chosen because it includes the week before and after a major holiday followed by a blizzard. Coincidentally, date formatting problems with the meters that began in January 2016 also affect the data.
 
 For this lesson we will use Pandas functions to normalize the data subset.
 
@@ -211,7 +211,7 @@ max            NaN
 ~~~
 {: .output}
 
-Most statistics are excluded for non-numeric data types, but Pandas does provide information about the total number of observations, the number of uniquely occuring values, the most commonly occuring value, and the number of time the most commonly occuring value appears in the dataset.
+Some statistics are excluded for non-numeric data types, but Pandas does provide information about the total number of observations, the number of uniquely occuring values, the most commonly occuring value, and the number of time the most commonly occuring value appears in the dataset.
 
 
 
