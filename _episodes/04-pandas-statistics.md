@@ -274,4 +274,27 @@ Index: []
 
 As expected, this operation also returns an empty dataframe. 
 
+### Working with Values
+
+Returning to our descriptive statistics, we have already noted that the maximum value is well above the 99th percentile. Our minimum value of zero may also be unusual, since many homes might be expected to use some amount of energy every fifteen minutes, even when residents are away. 
+
+~~~
+df["INTERVAL_READ"].describe()
+~~~
+{: .language-python}
+~~~
+count    276480.000000
+mean          0.262069
+std           0.270478
+min           0.000000
+25%           0.090600
+50%           0.171600
+75%           0.336000
+max           3.232200
+Name: INTERVAL_READ, dtype: float64
+~~~
+{: .output}
+
+
+
 {% include links.md %}
