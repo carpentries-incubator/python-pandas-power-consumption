@@ -211,8 +211,67 @@ max            NaN
 ~~~
 {: .output}
 
-Some statistics are excluded for non-numeric data types, but Pandas does provide information about the total number of observations, the number of uniquely occuring values, the most commonly occuring value, and the number of time the most commonly occuring value appears in the dataset.
+Some statistics are excluded for non-numeric data types, but Pandas does provide information about the total number of observations, the number of uniquely occuring values, the most commonly occuring value, and the number of time the most commonly occurring value appears in the dataset.
+
+Already we see some potential problems with the data. First, our most frequently occurring "INTERVAL\_TIME" value, 02-JAN-16, is not in the format we expect. It is lacking a timestamp, and it appears that at least 18,240 values in this column are affected. Also, the output of the ```df.info()``` function after reading in the first file in the list indicates that data for a single meter should consist of 1440 rows, yet the most frequently occurring "METER\_FID" value of 10862 occurs twice that many times. This means there is potentially some duplication in the dataset. Finally, although our file list consisted of 200 files, there are only 189 unique values for "METER\_FID." This may also point to some duplication.
 
 
+### Checking for Null Values
+
+Before proceeding, let's check for missing data. Missing data in pandas are represented using ```NaN```, or "not a number."
+
+~~~
+print(pd.isna(df))
+~~~
+{: .language-python}
+~~~
+      METER_FID  START_READ  END_READ  INTERVAL_TIME  INTERVAL_READ   date
+0         False       False     False          False          False  False
+1         False       False     False          False          False  False
+2         False       False     False          False          False  False
+3         False       False     False          False          False  False
+4         False       False     False          False          False  False
+...         ...         ...       ...            ...            ...    ...
+1435      False       False     False          False          False  False
+1436      False       False     False          False          False  False
+1437      False       False     False          False          False  False
+1438      False       False     False          False          False  False
+1439      False       False     False          False          False  False
+
+[276480 rows x 6 columns]
+~~~
+{: .output}
+
+A quick inspection doesn't show any missing data in the first or last five rows. What we really want is to find rows with missing data or NaN values, and we can look for null values within columns as well as rows.
+
+To search for NaN values across all rows within a dataframe, we use the row axis.
+
+~~~
+row_na = df[df.isna().any(axis=1)].copy()
+row_na
+~~~
+{: .language-python}
+~~~
+Empty DataFrame
+Columns: [METER_FID, START_READ, END_READ, INTERVAL_TIME, INTERVAL_READ, date]
+Index: []
+~~~
+{: .output}
+
+The operation above returns an empty dataframe, indicating that there are now missing values in the dataset. But we can also check by column.
+
+~~~
+meter_fid_na = df[df["METER_FID"].isna()].copy()
+print(meter_fid_na)
+~~~
+{: .language-python}
+~~~
+Empty DataFrame
+Columns: [METER_FID, START_READ, END_READ, INTERVAL_TIME, INTERVAL_READ, date]
+Index: []
+~~~
+{: .output}
+
+As expected, this operation also returns an empty dataframe. 
 
 {% include links.md %}
