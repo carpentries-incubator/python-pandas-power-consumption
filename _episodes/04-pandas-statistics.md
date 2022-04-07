@@ -15,7 +15,7 @@ keypoints:
 
 Metadata provided with the published Los Alamos Public Utility Department Smart Meter dataset at Dryad <https://doi.org/10.5061/dryad.m0cfxpp2c> indicates that aside from de-identification the data have not been pre-processed or normalized and may include missing data, duplicate entries. 
 
-The full dataset is too large for this tutorial format. The subset used includes data from two hundred smart meters, recorded between December 19, 2015 and January 2, 2016. The full dataset includes data from 1825 meters and covers a timespan from July, 2013 through December, 2019. The two hundred meters used for the lesson subset were randomly selected. The date range was chosen because it includes the week before and after a major holiday followed by a blizzard. Coincidentally, date formatting problems with the meters that began in January 2016 also affect the data.
+The full dataset is too large for this tutorial format. The subset used includes data from two hundred smart meters, recorded between December 19, 2015 and January 2, 2016. The full dataset includes data from 1825 meters and covers a timespan from July, 2013 through December, 2019. The two hundred meters used for the lesson subset were randomly selected. The date range was chosen because it includes the week before and after a major US holiday followed by a blizzard. Coincidentally, date formatting problems with the meters that began in January 2016 also affect the data.
 
 For this lesson we will use Pandas functions to normalize the data subset.
 
@@ -90,14 +90,14 @@ Next we create a loop to append the other files in the list to our dataframe. Si
 
 ~~~
 for f in flist[1:]:
-    df = df.append(pd.read_csv(f))
+    df = df.append(pd.read_csv(f), ignore_index=True)
 
 print(df.info())
 ~~~
 {: .language-python}
 ~~~
 <class 'pandas.core.frame.DataFrame'>
-Int64Index: 273600 entries, 0 to 1439
+RangeIndex: 273600 entries, 0 to 273599
 Data columns (total 6 columns):
  #   Column         Non-Null Count   Dtype  
 ---  ------         --------------   -----  
@@ -108,7 +108,7 @@ Data columns (total 6 columns):
  4   INTERVAL_READ  273600 non-null  float64
  5   date           273600 non-null  object 
 dtypes: float64(3), object(3)
-memory usage: 14.6+ MB
+memory usage: 12.5+ MB
 ~~~
 {: .output}
 
@@ -295,6 +295,99 @@ Name: INTERVAL_READ, dtype: float64
 ~~~
 {: .output}
 
+As we have seen, we can select the minimum and maximum values in a column using the ```min()``` and ```max()``` functions.
 
+~~~
+print("Minimum value:", df["INTERVAL_READ"].min())
+print("Maximum value:", df["INTERVAL_READ"].max())
+~~~
+{: .language-python}
+~~~
+Minimum value: 0.0
+Maximum value: 3.2322
+~~~
+{: .output}
+
+This is useful if we want to know what those values are. We may want to have more information about the corresponding meter's start and end reading, the date, and the meter ID. One way to discover this information is to use the ```idxmin()``` and ```idxmax()``` functions to get the position indices of the rows where the minimum and maximum values occur.
+
+~~~
+print("Position index of the minimum value:", df["INTERVAL_READ"].idxmin())
+print("Position index of the maximum value:", df["INTERVAL_READ"].idxmax())
+~~~
+{: .language-python}
+~~~
+Position index of the minimum value: 2883
+Position index of the maximum value: 86815
+~~~
+{: .output}
+
+Now we can use the position index to select the row with the reported minimum value.
+
+~~~
+print(df.iloc[2883])
+~~~
+{: .language-python}
+~~~
+METER_FID                       10274
+START_READ                    1616.99
+END_READ                       1619.7
+INTERVAL_TIME    19-DEC-2015 00:45:00
+INTERVAL_READ                       0
+date                       2015-12-19
+Name: 2883, dtype: object
+~~~
+{: .output}
+
+We can do the same with the maximum value.
+
+~~~
+print(df.iloc[86815])
+~~~
+{: .language-python}
+~~~
+METER_FID                       22918
+START_READ                    23541.6
+END_READ                      23603.1
+INTERVAL_TIME    23-DEC-2015 07:45:00
+INTERVAL_READ                  3.2322
+date                       2015-12-23
+Name: 86815, dtype: object
+~~~
+{: .output}
+
+Notice that in both cases, the ```idxmin()``` and ```idxmax()``` functions return a single position index number, when in fact the minimum and maximum values may occur multiple times. We can use the ```value_counts()``` function to demonstrate that 0 occurs thousands of times in the dataset.
+
+~~~
+print(pd.value_counts(df["INTERVAL_READ"]))
+~~~
+{: .language-python}
+~~~
+0.0000    6346
+0.1488    1087
+0.1482     918
+0.0012     903
+0.0060     765
+          ... 
+1.8162       1
+1.7976       1
+2.1366       1
+1.5072       1
+1.7850       1
+Name: INTERVAL_READ, Length: 3293, dtype: int64
+~~~
+{: .output}
+
+To find the number of rows with "INTERVAL\_READ" values equal to a specific value, we can also create a subset of rows with that value and then get the length of the subset.
+
+~~~
+print("Number of rows with minimum interval read values:", len(df[df["INTERVAL_READ"] == 0]))
+print("Number of rows with maximum interval read values:", len(df[df["INTERVAL_READ"] == 3.2322]))
+~~~
+{: .language-python}
+~~~
+Number of rows with minimum interval read values: 6346
+Number of rows with maximum interval read values: 1
+~~~
+{: .output}
 
 {% include links.md %}
