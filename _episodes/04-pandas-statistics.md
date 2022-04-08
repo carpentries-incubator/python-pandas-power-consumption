@@ -224,7 +224,7 @@ Already we see some potential problems with the data. First, our most frequently
 > the methods we have demonstrated to identify the data types of different 
 > columns in a pandas dataframe.
 >
-> > ## Output
+> > ## Solution
 > > ~~~
 > > print("Dataframe info:")
 > > print(df.info())
