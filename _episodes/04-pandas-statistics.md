@@ -224,20 +224,11 @@ Already we see some potential problems with the data. First, our most frequently
 > the methods we have demonstrated to identify the data types of different 
 > columns in a pandas dataframe.
 >
-> ~~~
-> print("Dataframe info:")
-> print(df.info())
->
-> print("Descriptive stats for floating point numbers:")
-> print(df.describe(include=float))
-> 
-> print("Descriptive stats for objects:")
-> print(df.describe(include=object))
-> ~~~
-> {: .language-python}
->
 > > ## Output
 > > ~~~
+> > print("Dataframe info:")
+> > print(df.info())
+> > 
 > > Dataframe info:
 > > <class 'pandas.core.frame.DataFrame'>
 > > RangeIndex: 276480 entries, 0 to 276479
@@ -254,6 +245,9 @@ Already we see some potential problems with the data. First, our most frequently
 > > memory usage: 12.7+ MB
 > > None
 > >
+> > print("Descriptive stats for floating point numbers:")
+> > print(df.describe(include=float))
+> >
 > > Descriptive stats for floating point numbers:
 > >           START_READ       END_READ  INTERVAL_READ
 > > count  276480.000000  276480.000000  276480.000000
@@ -265,6 +259,9 @@ Already we see some potential problems with the data. First, our most frequently
 > > 75%     22752.376000   22778.772000       0.336000
 > > max     52071.944000   52158.061000       3.232200
 > > 
+> > print("Descriptive stats for objects:")
+> > print(df.describe(include=object))
+> >
 > > Descriptive stats for objects:
 > >         METER_FID INTERVAL_TIME        date
 > > count      276480        276480      276480
