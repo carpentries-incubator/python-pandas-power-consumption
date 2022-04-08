@@ -213,6 +213,68 @@ Some statistics are excluded for non-numeric data types, but Pandas does provide
 
 Already we see some potential problems with the data. First, our most frequently occurring "INTERVAL\_TIME" value, 02-JAN-16, is not in the format we expect. It is lacking a timestamp, and it appears that at least 18,240 values in this column are affected. Also, the output of the ```df.info()``` function after reading in the first file in the list indicates that data for a single meter should consist of 1440 rows, yet the most frequently occurring "METER\_FID" value of 10862 occurs twice that many times. This means there is potentially some duplication in the dataset. Finally, although our file list consisted of 200 files, there are only 189 unique values for "METER\_FID." This may also point to some duplication.
 
+> ## Challenge: Descriptive Statistics by Data Type
+>
+> We have seen that the default behavior in pandas is to output descriptive statistics for 
+> numeric data types. It is also possible, using the ```include``` argument demonstrated 
+> above, to output descriptive statistics for specific data types.
+> 
+> Write some code to output descriptive statistics by datatype for each of the data
+> types in the dataset. Refer to python data types documentation and use any of 
+> the methods we have demonstrated to identify the data types of different 
+> columns in a pandas dataframe.
+>
+> ~~~
+> print("Dataframe info:")
+> print(df.info())
+>
+> print("Descriptive stats for floating point numbers:")
+> print(df.describe(include=float))
+> 
+> print("Descriptive stats for objects:")
+> print(df.describe(include=object))
+> ~~~
+> {: .language-python}
+>
+> > ## Output
+> > ~~~
+> > Dataframe info:
+> > <class 'pandas.core.frame.DataFrame'>
+> > RangeIndex: 276480 entries, 0 to 276479
+> > Data columns (total 6 columns):
+> > #   Column         Non-Null Count   Dtype  
+> > ---  ------         --------------   -----  
+> > 0   METER_FID      276480 non-null  object 
+> > 1   START_READ     276480 non-null  float64
+> > 2   END_READ       276480 non-null  float64
+> > 3   INTERVAL_TIME  276480 non-null  object 
+> > 4   INTERVAL_READ  276480 non-null  float64
+> > 5   date           276480 non-null  object 
+> > dtypes: float64(3), object(3)
+> > memory usage: 12.7+ MB
+> > None
+> >
+> > Descriptive stats for floating point numbers:
+> >           START_READ       END_READ  INTERVAL_READ
+> > count  276480.000000  276480.000000  276480.000000
+> > mean    17177.140133   17202.299270       0.262069
+> > std     10283.055260   10297.155631       0.270478
+> > min       658.789000     661.687000       0.000000
+> > 25%      9918.083000    9932.173000       0.090600
+> > 50%     15800.545000   15827.074000       0.171600
+> > 75%     22752.376000   22778.772000       0.336000
+> > max     52071.944000   52158.061000       3.232200
+> > 
+> > Descriptive stats for objects:
+> >         METER_FID INTERVAL_TIME        date
+> > count      276480        276480      276480
+> > unique        191          1251          15
+> > top         10862     02-JAN-16  2015-12-19
+> > freq         2880         18432       18432
+> > ~~~
+> > {: .output}
+> {: .solution}
+{: .challenge}
 
 ### Checking for Null Values
 
