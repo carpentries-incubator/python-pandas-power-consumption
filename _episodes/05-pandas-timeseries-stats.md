@@ -1,5 +1,5 @@
 ---
-title: "Visualizing Tabular Data"
+title: "Working with Time Series Data"
 teaching: 30
 exercises: 15
 questions:
