@@ -1,4 +1,4 @@
-# Time Series Analysis of Solar Power Generation Data
+# Time Series Analysis of Smart Meter Power Consumption Data
 
 [![Create a Slack Account with us](https://img.shields.io/badge/Create_Slack_Account-The_Carpentries-071159.svg)](https://swc-slack-invite.herokuapp.com/)
 
