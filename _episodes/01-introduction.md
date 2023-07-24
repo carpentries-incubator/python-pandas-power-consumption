@@ -1,16 +1,13 @@
 ---
 title: "Introduction"
-teaching: 15
+teaching: 20
 exercises: 10
 questions:
-- "What are common use cases for timeseries analysis?"
+- ""
 objectives:
-- "Read and plot timeseries data using Python Pandas."
-- "Group data and generate descriptive statistics."
-- "Resample timeseries data using datetime indexing in Pandas.
+- ""
 keypoints:
-- "Pandas is a Python library that operates efficiently against large datasets."
-- "Datetime indexing with Pandas enables resampling of timeseries data using different time steps."
+- ""
 ---
 
 ## Introducing time series
