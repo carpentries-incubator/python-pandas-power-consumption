@@ -39,6 +39,9 @@ anomalies.
 datasets due to weather events, power outages, or other causes.
 - Random selection of data for 10 meters from the remaining subset.
 
+Scripts used to process the source data into the lesson subset is available
+from [pending]().
+
 At the outset of a lesson, learners are recommended to create a project directory.
 
 1. **Download** this data file to your computer: [pending]()
