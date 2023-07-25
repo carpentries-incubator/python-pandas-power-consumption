@@ -13,16 +13,21 @@ keypoints:
 - "Use `concat()` to concatenate tabular dataframes that have the same structure."
 ---
 
-Time series data can be stored as subsets in files. In order to analyze the complete time series, it's necessary to combine these files.
+Our data have been stored in one CSV file per smart meter, in which the data include all of the meter readings taken from that meter during the period of study. Readings are taken every 15 minutes, for a total of 96 readings per day. 
+
+The structure of the data has not been altered from the source data. Each CSV file contains the following fields:
+
+- **METER_FID**: The identification number of the meter for which the data were recorded.
+- **START_READ**: The meter reading at 00:15 (12:15 AM) of the date specified in the **INTERVAL_TIME** field. Note that this value is the same for each reading taken during a day, and is the same as the **END_READ** value of the previous day.
+- **END_READ**: The actual value of the meter after the final interval of the date specified in the **INTERVAL_TIME** field, representing the total amount of power consumed during the whole day. This value becomes the value of the **START_READ** field for the next day.
+- **INTERVAL_TIME**: The time at which a meter reading was taken. Readings are taken every 15 minutes, with the first reading for a day taken at 00:15 (12:15 AM) and representing power usage since 00:00 (12:00 AM) of the same day.
+- **INTERVAL_READ**: The amount of power consumed between readings. The sum of readings between 00:15 of a given day and 00:00 of the following day should be equal (to two decimal places) to the difference between the **END_READ** and **START_READ** values for that day.
+
+In order to inspect and analyze the data for each meter, we could read and work with each file independently. However, as we may also want to compare statistics or trends across multiple meters, it can be more practical to combine or concatenate the data from multiple meters into a single dataset. Having done that, we can group the data by meter, date, or other variables of interest. The Pandas library for Python allows us to do just this.
 
 ## Libraries
 
-When you launch a Python environment, it opens with a set of default libraries loaded. These libraries provide access to a default set of functions, including commonly used functions like ```print()``` and ```help()```. Libraries can be used to extend the functionality of the environment beyond the default.
-
-About Pandas...
-
-About glob...
-
+When you launch a Python environment, it opens with a set of default libraries loaded. These libraries provide access to a default set of functions, including commonly used functions like ```print()``` and ```help()```. Libraries can be used to extend the functionality of the environment beyond the default. Here, we are going to import the ```pandas``` and ```glob``` libraries to add functionality to our environment. Specifically, ```pandas``` is a library that provides methods for indexing and manipulating large datasets. The ```glob``` library allows us to quickly create lists of files based on patterns in filenames. 
 
 ~~~
 import pandas as pd
