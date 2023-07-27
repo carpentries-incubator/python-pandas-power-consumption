@@ -37,9 +37,10 @@ between January 1, 2014 and December 31, 2019.
 anomalies.
 - Further limiting the included date ranges to exclude common outliers across 
 datasets due to weather events, power outages, or other causes.
-- Random selection of data for 10 meters from the remaining subset.
+- Selection of the final set of 15 data files based on inspection of plots
+and completeness of the data.
 
-Scripts used to process the source data into the lesson subset is available
+Scripts used to process the source data into the lesson subset are available
 from [pending]().
 
 At the outset of a lesson, learners are recommended to create a project directory.
