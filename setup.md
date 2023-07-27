@@ -41,11 +41,11 @@ datasets due to weather events, power outages, or other causes.
 and completeness of the data.
 
 Scripts used to process the source data into the lesson subset are available
-from [pending]().
+from [the lesson's GitHub repository](https://github.com/carpentries-incubator/python-pandas-power-consumption/tree/gh-pages/code).
 
 At the outset of a lesson, learners are recommended to create a project directory.
 
-1. **Download** this data file to your computer: [Smart Meter data subset](https://digitalrepository.unm.edu/context/library_data/article/1003/type/native/viewcontent)
+1. **Download** this data file to your computer: [Smart meter data subset](https://digitalrepository.unm.edu/context/library_data/article/1003/type/native/viewcontent)
 1. Within a directory on their system for which learners have read and write 
 permissions (user home, desktop, or similar), create a directory named
 *pandas_timeseries*.
