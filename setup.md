@@ -45,7 +45,7 @@ from [pending]().
 
 At the outset of a lesson, learners are recommended to create a project directory.
 
-1. **Download** this data file to your computer: [pending]()
+1. **Download** this data file to your computer: [Smart Meter data subset](https://digitalrepository.unm.edu/context/library_data/article/1003/type/native/viewcontent)
 1. Within a directory on their system for which learners have read and write 
 permissions (user home, desktop, or similar), create a directory named
 *pandas_timeseries*.
