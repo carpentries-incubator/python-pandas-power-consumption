@@ -172,6 +172,10 @@ for i in final_subset:
     
 #%% save subsets to file
 
+final_subset = [285, 10063, 44440, 4348, 45013, 
+                32366, 24197, 18918, 35034, 42755, 
+                25188, 29752, 20967, 12289, 8078]
+
 f_counter= 1
 for i in final_subset:
     fpath = './LADPU\\' + str(i) + '.csv'
@@ -188,6 +192,6 @@ for i in final_subset:
     print(fpath, 'has null values:', has_null)
     print(fpath, 'has duplicate data:', has_dupes, "\n")  
     out_path = './LADPU_meter_data_subset/ladpu_smart_meter_data_' + str(f_counter) + '.csv'
-    data.to_csv(out_path, index=False)
+    data.to_csv(out_path, index=True)
     f_counter += 1
     
