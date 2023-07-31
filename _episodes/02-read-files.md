@@ -5,9 +5,9 @@ exercises: 20
 questions:
 - "How can we manipulate tabular data files in Python?"
 objectives:
-- "Read tabular data from a file into a program."
+- "Read tabular data from a file into Pandas."
 - "Change the structure of a dataframe."
-- "Combine multiple files into a master dataset."
+- "Combine multiple files into a single dataset."
 keypoints:
 - "PANDAS is a Python library designed to work with large datasets."
 - "Use `concat()` to concatenate tabular dataframes that have the same structure."
@@ -37,11 +37,21 @@ import glob
 
 ## Reading files
 
+Creating a list of filenames that we want to read is a common way of iterating over files in Python. We use ```glob``` to create the list, though for now we will only read the first file in the list. 
+
 ~~~
-data = pd.read_csv("1003.csv")
+file_list = glob.glob('../data/*.csv')
+print(file_list)
 ~~~
 {: .language-python}
 
+Lists may or may not be sorted in Python. That is, our files may appear in any order in the list. We can sort the files by name before reading the first file.
+
+~~~
+file_list = sorted(file_list)
+data = pd.read_csv(file_list[0])
+~~~
+{: .language-python}
 
 ## Inspecting the data
 
@@ -69,7 +79,7 @@ print(data.shape)
 ~~~
 {: .language-python}
 ~~~
-(226752, 5)
+(105012, 4)
 ~~~
 {: .output}
 
@@ -80,10 +90,10 @@ print(data.dtypes)
 ~~~
 {: .language-python}
 ~~~
+INTERVAL_TIME     object
 METER_FID          int64
 START_READ       float64
 END_READ         float64
-INTERVAL_TIME     object
 INTERVAL_READ    float64
 dtype: object
 ~~~
