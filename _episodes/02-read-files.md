@@ -122,36 +122,36 @@ print(data.info())
 {: .language-python}
 ~~~
 <class 'pandas.core.frame.DataFrame'>
-RangeIndex: 226752 entries, 0 to 226751
+RangeIndex: 105012 entries, 0 to 105011
 Data columns (total 5 columns):
  #   Column         Non-Null Count   Dtype  
 ---  ------         --------------   -----  
- 0   METER_FID      226752 non-null  int64  
- 1   START_READ     226752 non-null  float64
- 2   END_READ       226752 non-null  float64
- 3   INTERVAL_TIME  226752 non-null  object 
- 4   INTERVAL_READ  226656 non-null  float64
+ 0   INTERVAL_TIME  105012 non-null  object 
+ 1   METER_FID      105012 non-null  int64  
+ 2   START_READ     105012 non-null  float64
+ 3   END_READ       105012 non-null  float64
+ 4   INTERVAL_READ  105012 non-null  float64
 dtypes: float64(3), int64(1), object(1)
-memory usage: 8.7+ MB
+memory usage: 4.0+ MB
 None
 ~~~
 {: .output}
 
 Note that ```info()``` prints out all of the information we got from the ```type()``` function and the ```shape``` and ```dtypes``` attributes. 
 
-We can also inspect some rows of data. Since the table is large - 226,752 rows - we may only want to look at the first few or the last few rows. To do this, we can use the ```head()``` and ```tail()``` functions, respectively.
+We can also inspect some rows of data. Since the table is large - over 100,000 rows - we may only want to look at the first few or the last few rows. To do this, we can use the ```head()``` and ```tail()``` functions, respectively.
 
 ~~~
 print(data.head())
 ~~~
 {: .language-python}
 ~~~
-   METER_FID  START_READ  END_READ         INTERVAL_TIME  INTERVAL_READ
-0       1003     332.308   374.561  13-JUL-2013 00:15:00         0.4098
-1       1003     332.308   374.561  13-JUL-2013 00:30:00         0.1548
-2       1003     332.308   374.561  13-JUL-2013 00:45:00         0.3168
-3       1003     332.308   374.561  13-JUL-2013 01:00:00         0.3084
-4       1003     332.308   374.561  13-JUL-2013 01:15:00         0.1320
+         INTERVAL_TIME  METER_FID  START_READ   END_READ  INTERVAL_READ
+0  2017-01-01 00:00:00        285   14951.787  14968.082         0.0744
+1  2017-01-01 00:15:00        285   14968.082  14979.831         0.0762
+2  2017-01-01 00:30:00        285   14968.082  14979.831         0.1050
+3  2017-01-01 00:45:00        285   14968.082  14979.831         0.0636
+4  2017-01-01 01:00:00        285   14968.082  14979.831         0.0870
 ~~~
 {: .output}
 
@@ -160,12 +160,12 @@ print(data.tail())
 ~~~
 {: .language-python}
 ~~~
-        METER_FID  START_READ   END_READ         INTERVAL_TIME  INTERVAL_READ
-226747       1003   56868.876  56897.653  31-DEC-2019 23:00:00         0.2592
-226748       1003   56868.876  56897.653  31-DEC-2019 23:15:00         0.2820
-226749       1003   56868.876  56897.653  31-DEC-2019 23:30:00         0.4464
-226750       1003   56868.876  56897.653  31-DEC-2019 23:45:00         0.4626
-226751       1003   56868.876  56897.653  01-JAN-2020 00:00:00         0.4662
+              INTERVAL_TIME  METER_FID  START_READ   END_READ  INTERVAL_READ
+105007  2019-12-31 22:45:00        285   28358.546  28397.749         0.4944
+105008  2019-12-31 23:00:00        285   28358.546  28397.749         0.4974
+105009  2019-12-31 23:15:00        285   28358.546  28397.749         0.4422
+105010  2019-12-31 23:30:00        285   28358.546  28397.749         0.4212
+105011  2019-12-31 23:45:00        285   28358.546  28397.749         0.3816
 ~~~
 {: .output}
 
@@ -178,17 +178,17 @@ print(data.head(10))
 ~~~
 {: .language-python}
 ~~~
-   METER_FID  START_READ  END_READ         INTERVAL_TIME  INTERVAL_READ
-0       1003     332.308   374.561  13-JUL-2013 00:15:00         0.4098
-1       1003     332.308   374.561  13-JUL-2013 00:30:00         0.1548
-2       1003     332.308   374.561  13-JUL-2013 00:45:00         0.3168
-3       1003     332.308   374.561  13-JUL-2013 01:00:00         0.3084
-4       1003     332.308   374.561  13-JUL-2013 01:15:00         0.1320
-5       1003     332.308   374.561  13-JUL-2013 01:30:00         0.3534
-6       1003     332.308   374.561  13-JUL-2013 01:45:00         0.3318
-7       1003     332.308   374.561  13-JUL-2013 02:00:00         0.1566
-8       1003     332.308   374.561  13-JUL-2013 02:15:00         0.3318
-9       1003     332.308   374.561  13-JUL-2013 02:30:00         0.1314
+         INTERVAL_TIME  METER_FID  START_READ   END_READ  INTERVAL_READ
+0  2017-01-01 00:00:00        285   14951.787  14968.082         0.0744
+1  2017-01-01 00:15:00        285   14968.082  14979.831         0.0762
+2  2017-01-01 00:30:00        285   14968.082  14979.831         0.1050
+3  2017-01-01 00:45:00        285   14968.082  14979.831         0.0636
+4  2017-01-01 01:00:00        285   14968.082  14979.831         0.0870
+5  2017-01-01 01:15:00        285   14968.082  14979.831         0.0858
+6  2017-01-01 01:30:00        285   14968.082  14979.831         0.0750
+7  2017-01-01 01:45:00        285   14968.082  14979.831         0.0816
+8  2017-01-01 02:00:00        285   14968.082  14979.831         0.0966
+9  2017-01-01 02:15:00        285   14968.082  14979.831         0.0720
 ~~~
 {: .output}
 
@@ -256,18 +256,18 @@ print(data.INTERVAL_TIME.head())
 ~~~
 {: .language-python}
 ~~~
-0    13-JUL-2013 00:15:00
-1    13-JUL-2013 00:30:00
-2    13-JUL-2013 00:45:00
-3    13-JUL-2013 01:00:00
-4    13-JUL-2013 01:15:00
+0    2017-01-01 00:00:00
+1    2017-01-01 00:15:00
+2    2017-01-01 00:30:00
+3    2017-01-01 00:45:00
+4    2017-01-01 01:00:00
 Name: INTERVAL_TIME, dtype: object
 ~~~
 {: .output}
 
-Note as well that the data type (```dtype```) is given as ```object```, even though ```datetime``` is a data type recognized by Pandas. In order to use date information in analyses, we can convert the data in the ```INTERVAL_TIME``` column into a recognized date format. Pandas come with functions to do this.
+Note as well that the data type (```dtype```) is given as ```object```, even though ```datetime``` is a data type recognized by Pandas. In order to use date information in analyses, we can convert the data in the ```INTERVAL_TIME``` column into a recognized date format. In a later episode, we will look at ways we can manipulate datetime information by creating a datetime index. For now we will begin by exploring some of Pandas datetime methods without reindexing the data.
 
-Explain what is happening in the next code block...
+We can change the data type of the "INTERVAL_TIME" column in place, but for a closer look at what is happening we will save the date data in a new column with the updated data type.
 
 ~~~
 data["iso_date"] = pd.to_datetime(data["INTERVAL_TIME"], infer_datetime_format=True)
@@ -282,18 +282,18 @@ print(data.info())
 {: .language-python}
 ~~~
 <class 'pandas.core.frame.DataFrame'>
-RangeIndex: 226752 entries, 0 to 226751
+RangeIndex: 105012 entries, 0 to 105011
 Data columns (total 6 columns):
  #   Column         Non-Null Count   Dtype         
 ---  ------         --------------   -----         
- 0   METER_FID      226752 non-null  int64         
- 1   START_READ     226752 non-null  float64       
- 2   END_READ       226752 non-null  float64       
- 3   INTERVAL_TIME  226752 non-null  object        
- 4   INTERVAL_READ  226656 non-null  float64       
- 5   iso_date       226752 non-null  datetime64[ns]
+ 0   INTERVAL_TIME  105012 non-null  object        
+ 1   METER_FID      105012 non-null  int64         
+ 2   START_READ     105012 non-null  float64       
+ 3   END_READ       105012 non-null  float64       
+ 4   INTERVAL_READ  105012 non-null  float64       
+ 5   iso_date       105012 non-null  datetime64[ns]
 dtypes: datetime64[ns](1), float64(3), int64(1), object(1)
-memory usage: 10.4+ MB
+memory usage: 4.8+ MB
 None
 ~~~
 {: .output}
@@ -302,106 +302,66 @@ Note too that we are adding the new column but leaving the original date data in
 
 ## Combining multiple files into a single dataframe
 
-Now that we have read a single file into our Python environment and explored its structure a little, we want to develop a process to combine all of our data files into a single dataframe.
+Now that we have read a single file into our Python environment and explored its structure a little, we want to develop a process to combine all of our data files into a single dataframe. We can do this using _list comprehension_ to read the files in our file list and concatenate them into a single dataframe.
 
-In order to do this, we need to introduce two new concepts: lists and loops.
-
-In Python a list is ...
+To do this, we will re-assign our ```data``` variable to include the complete, concatenated dataset. Note that it is a large dataset, with over 1,500,000 rows.
 
 ~~~
-my_list = ["orange", "yellow", "purple", "green", "red", "blue"]
-print(my_list)
-~~~
-{: .language-python}
-~~~
-['orange', 'yellow', 'purple', 'green', 'red', 'blue']
-~~~
-{: .output}
-
-We will take a more in depth look at lists in another lesson, but for now we can use the ```glob``` library that we imported earlier to create a list of the individual data files that we will combine into a single dataset.
-
-~~~
-file_list = glob.glob("*.csv")
-print(len(file_list))
-~~~
-{: .language-python}
-~~~
-1825
-~~~
-{: .output}
-
-If we were to print out the entire list of files, the output would be too long to read. We can print a subset of the loop using index slicing.
-
-~~~
-print(file_list[0:5])
-~~~
-{: .language-python}
-~~~
-['1003.csv', '10042.csv', '10063.csv', '10175.csv', '1020.csv']
-~~~
-{: .output}
-
-
-The other concept is a loop, or more specifically in this case a _for_ loop. What that is...
-
-Syntax of a for loop...
-
-For example, now that we have a list of filenames of our data files, we can print them using a for loop.
-
-~~~
-for file in file_list[0:10]:
-    print(file)
-~~~
-{: .language-python}
-~~~
-1003.csv
-10042.csv
-10063.csv
-10175.csv
-1020.csv
-10211.csv
-10214.csv
-10226.csv
-10270.csv
-10274.csv
-~~~
-{: .output}
-
-More pragmatically, we can use the ```concat()``` function in Pandas in combination with a ```for``` loop to combine the files in our list.
-Since the dataset is large, we are going to read only the first 10 files.
-
-~~~
-# Start by reading the first file
-
-master_data = pd.read_csv(file_list[0])
-
-# Use a loop to concatenate the data from the other files
-
-for file in file_list[1:10]:
-    new_data = pd.read_csv(file)
-    master_data = pd.concat([master_data, new_data], axis=0)
-	
-# Once the data have been concatenated, add the iso_date column
-
-master_data["iso_date"] = pd.to_datetime(master_data["INTERVAL_TIME"], infer_datetime_format=True)
-
-print(master_data.info())
+data = pd.concat([pd.read_csv(f) for f in file_list])
+print(data.info())
 ~~~
 {: .language-python}
 ~~~
 <class 'pandas.core.frame.DataFrame'>
-Int64Index: 2252736 entries, 0 to 226271
+Int64Index: 1575180 entries, 0 to 105011
+Data columns (total 5 columns):
+ #   Column         Non-Null Count    Dtype  
+---  ------         --------------    -----  
+ 0   INTERVAL_TIME  1575180 non-null  object 
+ 1   METER_FID      1575180 non-null  int64  
+ 2   START_READ     1575180 non-null  float64
+ 3   END_READ       1575180 non-null  float64
+ 4   INTERVAL_READ  1575180 non-null  float64
+dtypes: float64(3), int64(1), object(1)
+memory usage: 72.1+ MB
+None
+
+~~~
+{: .output}
+
+Let's take a moment to unpack the line of code that creates the dataframe:
+
+~~~
+data = pd.concat([pd.read_csv(f) for f in file_list])
+~~~
+{: .language-python}
+
+This line of code includes several statements that are evaluated in the following order:
+
+1. The for loop ```for f in file_list``` is evaluated first. As denoted by the square brackets, this creates a list of dataframes by calling Pandas' ```read_csv()``` function on each of the files in the *file_list* variable that we created above.
+1. The list of 15 dataframes is combined into a single dataframe using the ```concat()``` function. This function takes as its default argument a list of dataframes that share the same structure, and combines them vertically into a single dataframe.
+
+Now we can add the **iso_date** column using the same command as before:
+
+~~~
+data["iso_date"] = pd.to_datetime(data["INTERVAL_TIME"], infer_datetime_format=True)
+print(data.info())
+~~~
+{: .language-python}
+~~~
+<class 'pandas.core.frame.DataFrame'>
+Int64Index: 1575180 entries, 0 to 105011
 Data columns (total 6 columns):
- #   Column         Dtype         
----  ------         -----         
- 0   METER_FID      int64         
- 1   START_READ     float64       
- 2   END_READ       float64       
- 3   INTERVAL_TIME  object        
- 4   INTERVAL_READ  float64       
- 5   iso_date       datetime64[ns]
+ #   Column         Non-Null Count    Dtype         
+---  ------         --------------    -----         
+ 0   INTERVAL_TIME  1575180 non-null  object        
+ 1   METER_FID      1575180 non-null  int64         
+ 2   START_READ     1575180 non-null  float64       
+ 3   END_READ       1575180 non-null  float64       
+ 4   INTERVAL_READ  1575180 non-null  float64       
+ 5   iso_date       1575180 non-null  datetime64[ns]
 dtypes: datetime64[ns](1), float64(3), int64(1), object(1)
-memory usage: 120.3+ MB
+memory usage: 84.1+ MB
 None
 ~~~
 {: .output}
@@ -415,7 +375,7 @@ None
 > don't by default have a date data type.
 >
 > Given the lines of code below, put them in the correct order to read the data
-> file "1003.csv" and split the "INTERVAL_TIME" column into
+> file "ladpu_smart_meter_data_01.csv" and split the "INTERVAL_TIME" column into
 > three new columns for "year," "month," and "day."
 >
 > ~~~
@@ -423,7 +383,7 @@ None
 >
 > data["year"] = pd.to_datetime(data["INTERVAL_TIME"], infer_datetime_format=True).dt.year)
 >
-> data = pd.read_csv(1003.csv)
+> data = pd.read_csv("../data/ladpu_smart_meter_data_01.csv")
 >
 > data["month"] = pd.to_datetime(data["INTERVAL_TIME"], infer_datetime_format=True).dt.month)
 > ~~~
@@ -431,7 +391,7 @@ None
 >
 > > ## Solution
 > > ~~~
-> > data = pd.read_csv(1003.csv)
+> > data = pd.read_csv("../data/ladpu_smart_meter_data_01.csv")
 > >
 > > data["year"] = pd.to_datetime(data["INTERVAL_TIME"], infer_datetime_format=True).dt.year)
 > >
@@ -441,52 +401,6 @@ None
 > > ~~~
 > > {: .output}
 > {: .solution}
-{: .challenge}
-
-
-> ## Challenge: Different Ways of Doing the Same Thing
->
-> In the code that we wrote earlier to concatenate our data files into a single
-> data frame, we combined all of the data in a "master\_data" data frame using
-> a for loop. Then, once the loop was finished, we created the "iso\_date"
-> column for all of the data at once.
->
-> An alternative approach would be to create the "iso\_date" column for each
-> file's data before concatenating. Given the lines of code below, put them
-> in the correct order to add the "iso\_date" column for each file before 
-> appending or concatenating the data to the "master\_data" data frame.
->
-> ~~~
-> master_data = pd.read_csv(file_list[0])
->
-> file_list = glob.glob("*.csv")
->
-> for file in file_list[1:10]:
->     master_data = pd.concat([master_data, new_data], axis=0)
->     new_data["iso_date"] = pd.to_datetime(new_data["INTERVAL_TIME"], infer_datetime_format=True)
->     new_data = pd.read_csv(file)
->
-> master_data["iso_date"] = pd.to_datetime(master_data["INTERVAL_TIME"], infer_datetime_format=True)
-> ~~~
-> {: .language-python}
->
-> > ## Solution
-> > ~~~
-> > file_list = glob.glob("*.csv)
-> >
-> > master_data = pd.read_csv(file_list[0])
-> >
-> > master_data["iso_date"] = pd.to_datetime(master_data["INTERVAL_TIME"], infer_datetime_format=True)
-> >
-> > for file in file_list[1:10]:
-> >     new_data = pd.read_csv(file)
-> >     new_data["iso_date"] = pd.to_datetime(new_data["INTERVAL_TIME"], infer_datetime_format=True)
-> >     master_data = pd.concat([master_data, new_data], axis=0)
-> > ~~~
-> > {: .output}
-> {: .solution}
->
-> What are the advantages or disadvantages to doing it this way?
 {: .challenge}
 
 {% include links.md %}
