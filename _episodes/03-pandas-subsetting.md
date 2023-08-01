@@ -723,7 +723,7 @@ print(data.query('INTERVAL_READ > 0.16 and METER_FID == 285')[["METER_FID", "INT
 >
 > > ## Solution
 > > ~~~
-> > data.loc[data["INTERVAL_READ"] > df["INTERVAL_READ"].mean(), ["INTERVAL_TIME", "INTERVAL_READ", "METER_FID"]]
+> > data.loc[data["INTERVAL_READ"] > data["INTERVAL_READ"].mean(), ["INTERVAL_TIME", "INTERVAL_READ", "METER_FID"]]
 > > ~~~
 > > {: .output}
 > {: .solution}
