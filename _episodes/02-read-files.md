@@ -379,13 +379,13 @@ None
 > three new columns for "year," "month," and "day."
 >
 > ~~~
-> data["day"] = pd.to_datetime(data["INTERVAL_TIME"], infer_datetime_format=True).dt.day)
+> data["day"] = pd.to_datetime(data["INTERVAL_TIME"], infer_datetime_format=True).dt.day
 >
-> data["year"] = pd.to_datetime(data["INTERVAL_TIME"], infer_datetime_format=True).dt.year)
+> data["year"] = pd.to_datetime(data["INTERVAL_TIME"], infer_datetime_format=True).dt.year
 >
 > data = pd.read_csv("../data/ladpu_smart_meter_data_01.csv")
 >
-> data["month"] = pd.to_datetime(data["INTERVAL_TIME"], infer_datetime_format=True).dt.month)
+> data["month"] = pd.to_datetime(data["INTERVAL_TIME"], infer_datetime_format=True).dt.month
 > ~~~
 > {: .language-python}
 >
@@ -393,11 +393,11 @@ None
 > > ~~~
 > > data = pd.read_csv("../data/ladpu_smart_meter_data_01.csv")
 > >
-> > data["year"] = pd.to_datetime(data["INTERVAL_TIME"], infer_datetime_format=True).dt.year)
+> > data["year"] = pd.to_datetime(data["INTERVAL_TIME"], infer_datetime_format=True).dt.year
 > >
-> > data["month"] = pd.to_datetime(data["INTERVAL_TIME"], infer_datetime_format=True).dt.month)
+> > data["month"] = pd.to_datetime(data["INTERVAL_TIME"], infer_datetime_format=True).dt.month
 > >
-> > data["day"] = pd.to_datetime(data["INTERVAL_TIME"], infer_dateteim_format=True).dt.day)
+> > data["day"] = pd.to_datetime(data["INTERVAL_TIME"], infer_datetime_format=True).dt.day
 > > ~~~
 > > {: .output}
 > {: .solution}
