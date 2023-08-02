@@ -381,7 +381,7 @@ Name: 1575179, dtype: object
 > ~~~
 > print(data.iloc[0]["START_READ"])
 >
-> df = pd.read\_csv("../data/ladpu\_smart\_meter\_data_01.csv")
+> df = pd.read_csv("../data/ladpu_smart_meter_data_01.csv")
 >
 > print(df.iloc[-1]["END_READ"])
 > ~~~
@@ -389,7 +389,7 @@ Name: 1575179, dtype: object
 >
 > > ## Solution
 > > ~~~
-> df = pd.read\_csv("../data/ladpu\_smart\_meter\_data_01.csv")
+> df = pd.read_csv("../data/ladpu_smart_meter_data_01.csv")
 > print(df.iloc[0]["START_READ"])
 > print(df.iloc[-1]["END_READ"])
 > > ~~~
@@ -424,147 +424,148 @@ When only a single colon is used in the square brackets, the integer on the left
 By default, all rows between the starting and ending position will be returned. We can also specify a number of rows to increment over, using a second colon followed by the interval of rows to use. For example, if we want to return every other row out of the first twenty rows in the dataset, we would use the following:
 
 ~~~
-print(df[0:20:2])
+print(data[0:20:2])
 ~~~
 {: .language-python}
 ~~~
-
-	METER_FID 	START_READ 	END_READ 	INTERVAL_TIME 	INTERVAL_READ 	date
-0 	1003 	27326.181 	27362.047 	19-DEC-2015 00:00:00 	0.3216 	2015-12-19
-2 	1003 	27362.047 	27419.506 	19-DEC-2015 00:30:00 	0.3252 	2015-12-19
-4 	1003 	27362.047 	27419.506 	19-DEC-2015 01:00:00 	0.2934 	2015-12-19
-6 	1003 	27362.047 	27419.506 	19-DEC-2015 01:30:00 	0.3300 	2015-12-19
-8 	1003 	27362.047 	27419.506 	19-DEC-2015 02:00:00 	0.3258 	2015-12-19
-10 	1003 	27362.047 	27419.506 	19-DEC-2015 02:30:00 	0.2766 	2015-12-19
-12 	1003 	27362.047 	27419.506 	19-DEC-2015 03:00:00 	0.2382 	2015-12-19
-14 	1003 	27362.047 	27419.506 	19-DEC-2015 03:30:00 	0.2592 	2015-12-19
-16 	1003 	27362.047 	27419.506 	19-DEC-2015 04:00:00 	0.3408 	2015-12-19
-18 	1003 	27362.047 	27419.506 	19-DEC-2015 04:30:00 	0.3258 	2015-12-19
+          INTERVAL_TIME  METER_FID  START_READ   END_READ  INTERVAL_READ
+0   2017-01-01 00:00:00        285   14951.787  14968.082         0.0744
+2   2017-01-01 00:30:00        285   14968.082  14979.831         0.1050
+4   2017-01-01 01:00:00        285   14968.082  14979.831         0.0870
+6   2017-01-01 01:30:00        285   14968.082  14979.831         0.0750
+8   2017-01-01 02:00:00        285   14968.082  14979.831         0.0966
+10  2017-01-01 02:30:00        285   14968.082  14979.831         0.0798
+12  2017-01-01 03:00:00        285   14968.082  14979.831         0.0660
+14  2017-01-01 03:30:00        285   14968.082  14979.831         0.0846
+16  2017-01-01 04:00:00        285   14968.082  14979.831         0.0912
+18  2017-01-01 04:30:00        285   14968.082  14979.831         0.0720
 ~~~
 {: .output}
 
 If we don't specify a starting or ending position, Python will default to the first and last positions, respectively. The following will output the first ten rows.
 
 ~~~
-print(df[:10])
+print(data[:10])
 ~~~
 {: .language-python}
 ~~~
-	METER_FID 	START_READ 	END_READ 	INTERVAL_TIME 	INTERVAL_READ 	date
-0 	1003 	27326.181 	27362.047 	19-DEC-2015 00:00:00 	0.3216 	2015-12-19
-1 	1003 	27362.047 	27419.506 	19-DEC-2015 00:15:00 	0.2856 	2015-12-19
-2 	1003 	27362.047 	27419.506 	19-DEC-2015 00:30:00 	0.3252 	2015-12-19
-3 	1003 	27362.047 	27419.506 	19-DEC-2015 00:45:00 	0.3054 	2015-12-19
-4 	1003 	27362.047 	27419.506 	19-DEC-2015 01:00:00 	0.2934 	2015-12-19
-5 	1003 	27362.047 	27419.506 	19-DEC-2015 01:15:00 	0.2742 	2015-12-19
-6 	1003 	27362.047 	27419.506 	19-DEC-2015 01:30:00 	0.3300 	2015-12-19
-7 	1003 	27362.047 	27419.506 	19-DEC-2015 01:45:00 	0.3078 	2015-12-19
-8 	1003 	27362.047 	27419.506 	19-DEC-2015 02:00:00 	0.3258 	2015-12-19
-9 	1003 	27362.047 	27419.506 	19-DEC-2015 02:15:00 	0.3216 	2015-12-19
+         INTERVAL_TIME  METER_FID  START_READ   END_READ  INTERVAL_READ
+0  2017-01-01 00:00:00        285   14951.787  14968.082         0.0744
+1  2017-01-01 00:15:00        285   14968.082  14979.831         0.0762
+2  2017-01-01 00:30:00        285   14968.082  14979.831         0.1050
+3  2017-01-01 00:45:00        285   14968.082  14979.831         0.0636
+4  2017-01-01 01:00:00        285   14968.082  14979.831         0.0870
+5  2017-01-01 01:15:00        285   14968.082  14979.831         0.0858
+6  2017-01-01 01:30:00        285   14968.082  14979.831         0.0750
+7  2017-01-01 01:45:00        285   14968.082  14979.831         0.0816
+8  2017-01-01 02:00:00        285   14968.082  14979.831         0.0966
+9  2017-01-01 02:15:00        285   14968.082  14979.831         0.0720
 ~~~
 {: .output}
 
 We can use a negative position index to return the last ten rows.
 
 ~~~
-print(df[-10:])
+print(data[-10:])
 ~~~
 {: .language-python}
 ~~~
-	METER_FID 	START_READ 	END_READ 	INTERVAL_TIME 	INTERVAL_READ 	date
-1430 	1003 	27957.523 	27987.06 	02-JAN-16 	0.2586 	2016-01-02
-1431 	1003 	27957.523 	27987.06 	02-JAN-16 	0.2778 	2016-01-02
-1432 	1003 	27957.523 	27987.06 	02-JAN-16 	0.5970 	2016-01-02
-1433 	1003 	27957.523 	27987.06 	02-JAN-16 	0.5448 	2016-01-02
-1434 	1003 	27957.523 	27987.06 	02-JAN-16 	0.5202 	2016-01-02
-1435 	1003 	27957.523 	27987.06 	02-JAN-16 	0.5070 	2016-01-02
-1436 	1003 	27957.523 	27987.06 	02-JAN-16 	0.4896 	2016-01-02
-1437 	1003 	27957.523 	27987.06 	02-JAN-16 	0.4908 	2016-01-02
-1438 	1003 	27957.523 	27987.06 	02-JAN-16 	0.4872 	2016-01-02
-1439 	1003 	27957.523 	27987.06 	02-JAN-16 	0.4932 	2016-01-02
+               INTERVAL_TIME  METER_FID  START_READ  END_READ  INTERVAL_READ
+1575170  2019-12-31 21:30:00       8078   40684.475  40695.86         0.1410
+1575171  2019-12-31 21:45:00       8078   40684.475  40695.86         0.1098
+1575172  2019-12-31 22:00:00       8078   40684.475  40695.86         0.1020
+1575173  2019-12-31 22:15:00       8078   40684.475  40695.86         0.1140
+1575174  2019-12-31 22:30:00       8078   40684.475  40695.86         0.1098
+1575175  2019-12-31 22:45:00       8078   40684.475  40695.86         0.1284
+1575176  2019-12-31 23:00:00       8078   40684.475  40695.86         0.1194
+1575177  2019-12-31 23:15:00       8078   40684.475  40695.86         0.1062
+1575178  2019-12-31 23:30:00       8078   40684.475  40695.86         0.1344
+1575179  2019-12-31 23:45:00       8078   40684.475  40695.86         0.0870
 ~~~
 {: .output}
 
 This works the same with position based indexing. It can also work for label based indexing, depending on the labels used. 
 
 ~~~
-print(df.iloc[2:12:2])
+print(data.iloc[2:12:2])
 ~~~
 {: .language-python}
 ~~~
-	METER_FID 	START_READ 	END_READ 	INTERVAL_TIME 	INTERVAL_READ 	date
-2 	1003 	27362.047 	27419.506 	19-DEC-2015 00:30:00 	0.3252 	2015-12-19
-4 	1003 	27362.047 	27419.506 	19-DEC-2015 01:00:00 	0.2934 	2015-12-19
-6 	1003 	27362.047 	27419.506 	19-DEC-2015 01:30:00 	0.3300 	2015-12-19
-8 	1003 	27362.047 	27419.506 	19-DEC-2015 02:00:00 	0.3258 	2015-12-19
-10 	1003 	27362.047 	27419.506 	19-DEC-2015 02:30:00 	0.2766 	2015-12-19
+print(data.iloc[2:12:2])
+
+          INTERVAL_TIME  METER_FID  START_READ   END_READ  INTERVAL_READ
+2   2017-01-01 00:30:00        285   14968.082  14979.831         0.1050
+4   2017-01-01 01:00:00        285   14968.082  14979.831         0.0870
+6   2017-01-01 01:30:00        285   14968.082  14979.831         0.0750
+8   2017-01-01 02:00:00        285   14968.082  14979.831         0.0966
+10  2017-01-01 02:30:00        285   14968.082  14979.831         0.0798
 ~~~
 {: .output}
 
 ~~~
-print(df.loc[3:19:3])
+print(data.loc[3:19:3])
 ~~~
 {: .language-python}
 ~~~
- 	METER_FID 	START_READ 	END_READ 	INTERVAL_TIME 	INTERVAL_READ 	date
-3 	1003 	27362.047 	27419.506 	19-DEC-2015 00:45:00 	0.3054 	2015-12-19
-6 	1003 	27362.047 	27419.506 	19-DEC-2015 01:30:00 	0.3300 	2015-12-19
-9 	1003 	27362.047 	27419.506 	19-DEC-2015 02:15:00 	0.3216 	2015-12-19
-12 	1003 	27362.047 	27419.506 	19-DEC-2015 03:00:00 	0.2382 	2015-12-19
-15 	1003 	27362.047 	27419.506 	19-DEC-2015 03:45:00 	0.3348 	2015-12-19
-18 	1003 	27362.047 	27419.506 	19-DEC-2015 04:30:00 	0.3258 	2015-12-19
+          INTERVAL_TIME  METER_FID  START_READ   END_READ  INTERVAL_READ
+3   2017-01-01 00:45:00        285   14968.082  14979.831         0.0636
+6   2017-01-01 01:30:00        285   14968.082  14979.831         0.0750
+9   2017-01-01 02:15:00        285   14968.082  14979.831         0.0720
+12  2017-01-01 03:00:00        285   14968.082  14979.831         0.0660
+15  2017-01-01 03:45:00        285   14968.082  14979.831         0.0726
+18  2017-01-01 04:30:00        285   14968.082  14979.831         0.0720
 ~~~
 {: .output}
 
 We can select the values of single cells or column and row subsets by combining the methods used so far. First we specify the row index to use, then the column.
 
 ~~~
-print(df.iloc[0]['INTERVAL_READ'])
+print(data.iloc[0]['INTERVAL_READ'])
 ~~~
 {: .language-python}
 ~~~
-0.3216
+0.0744
 ~~~
 {: .output}
 
 We can select multiple rows and/or columns. Note that selecting multiple columns requires us to put them into a list.
 
 ~~~
-print(df.iloc[:10][['INTERVAL_READ', 'date']])
+print(data.iloc[:10][['INTERVAL_TIME', 'INTERVAL_READ']])
 ~~~
 {: .language-python}
 ~~~
-   INTERVAL_READ        date
-0         0.3216  2015-12-19
-1         0.2856  2015-12-19
-2         0.3252  2015-12-19
-3         0.3054  2015-12-19
-4         0.2934  2015-12-19
-5         0.2742  2015-12-19
-6         0.3300  2015-12-19
-7         0.3078  2015-12-19
-8         0.3258  2015-12-19
-9         0.3216  2015-12-19
+         INTERVAL_TIME  INTERVAL_READ
+0  2017-01-01 00:00:00         0.0744
+1  2017-01-01 00:15:00         0.0762
+2  2017-01-01 00:30:00         0.1050
+3  2017-01-01 00:45:00         0.0636
+4  2017-01-01 01:00:00         0.0870
+5  2017-01-01 01:15:00         0.0858
+6  2017-01-01 01:30:00         0.0750
+7  2017-01-01 01:45:00         0.0816
+8  2017-01-01 02:00:00         0.0966
+9  2017-01-01 02:15:00         0.0720
 ~~~
 {: .output}
 
-We can also use position indexing to select columns, with the same slicing syntax as above.
+We can also use position indexing to select columns, with the same slicing syntax as above. For example, to select the first ten rows of the first two columns:
 
 ~~~
-print(df.iloc[1:10, 0:2])
+print(data.iloc[1:10, 0:2])
 ~~~
 {: .language-python}
 ~~~
-   METER_FID  START_READ
-1      10063   15704.015
-2      10063   15704.015
-3      10063   15704.015
-4      10063   15704.015
-5      10063   15704.015
-6      10063   15704.015
-7      10063   15704.015
-8      10063   15704.015
-9      10063   15704.015
+         INTERVAL_TIME  METER_FID
+1  2017-01-01 00:15:00        285
+2  2017-01-01 00:30:00        285
+3  2017-01-01 00:45:00        285
+4  2017-01-01 01:00:00        285
+5  2017-01-01 01:15:00        285
+6  2017-01-01 01:30:00        285
+7  2017-01-01 01:45:00        285
+8  2017-01-01 02:00:00        285
+9  2017-01-01 02:15:00        285
 ~~~
 {: .output}
 
@@ -573,10 +574,10 @@ print(df.iloc[1:10, 0:2])
 > The frequency at which meter readings were taken means that a single day's worth of data consists of 96 rows. 
 > Which of the following lines of code would we use to select daily start and ending meter readings, plus the date for each day?
 > ~~~
-> A. df.loc[::96][['START_READ', 'END_READ', 'date']]
-> B. df.loc[0:1439:96]['START_READ', 'END_READ', 'date']
-> C. df.loc[::96]['START_READ', 'END_READ', 'date']
-> D. df.loc[:-1:96][['START_READ', 'END_READ', 'date']]
+> A. data.loc[::96][['START_READ', 'END_READ', 'INTERVAL_TIME']]
+> B. data.loc[0:96:96]['START_READ', 'END_READ', 'INTERVAL_TIME']
+> C. data.loc[::96]['START_READ', 'END_READ', 'INTERVAL_TIME']
+> D. data.loc[:-1:96][['START_READ', 'END_READ', 'INTERVAL_TIME']]
 > ~~~
 > {: .language-python}
 >
@@ -590,92 +591,105 @@ print(df.iloc[1:10, 0:2])
 
 ## Conditions
 
-There are several ways to select subsets of a data frame using conditions to select rows based on the value of specific variables. One commonly used method is boolean indexing, which returns rows for which a given condition evaluates to _True_. The following example uses the ```head()``` method to test whether the values of the "INTERVAL_READ" variable are greater than 0.16.
+There are several ways to select subsets of a data frame using conditions to select rows based on the value of specific variables. One commonly used method is boolean indexing, which returns rows for which a given condition evaluates to _True_. The following example tests whether the values of the "INTERVAL_READ" variable are greater than 0.16.
 
 ~~~
-print(df["INTERVAL_READ"] > 0.16)
+print(data["INTERVAL_READ"] > 0.16)
 ~~~
 {: .language-python}
 ~~~
-0    False
-1     True
-2     True
-3     True
-4    False
-Name: INTERVAL_READ, dtype: bool
+0          False
+1          False
+2          False
+3          False
+4          False
+           ...  
+1575175    False
+1575176    False
+1575177    False
+1575178    False
+1575179    False
+Name: INTERVAL_READ, Length: 1575180, dtype: bool
 ~~~
 {: .output}
 
 Note that we have to include the condition to be evaluated as the indexer in order to see the rows for which the condition evaluates to _True_.
 
 ~~~
-print(df[df["INTERVAL_READ"] > 0.16].head())
+print(data[data['INTERVAL_READ'] > 0.16])
 ~~~
 {: .language-python}
 ~~~
- 	METER_FID 	START_READ 	END_READ 	INTERVAL_TIME 	INTERVAL_READ 	date
-1 	10063 	15704.015 	15726.103 	19-DEC-2015 00:15:00 	0.1782 	2015-12-19
-2 	10063 	15704.015 	15726.103 	19-DEC-2015 00:30:00 	0.2172 	2015-12-19
-3 	10063 	15704.015 	15726.103 	19-DEC-2015 00:45:00 	0.2256 	2015-12-19
-5 	10063 	15704.015 	15726.103 	19-DEC-2015 01:15:00 	0.1716 	2015-12-19
-6 	10063 	15704.015 	15726.103 	19-DEC-2015 01:30:00 	0.2370 	2015-12-19
+               INTERVAL_TIME  METER_FID  START_READ   END_READ  INTERVAL_READ
+32       2017-01-01 08:00:00        285   14968.082  14979.831         0.2304
+33       2017-01-01 08:15:00        285   14968.082  14979.831         0.1854
+34       2017-01-01 08:30:00        285   14968.082  14979.831         0.1878
+35       2017-01-01 08:45:00        285   14968.082  14979.831         0.1920
+36       2017-01-01 09:00:00        285   14968.082  14979.831         0.1710
+...                      ...        ...         ...        ...            ...
+1575153  2019-12-31 17:15:00       8078   40684.475  40695.860         0.2616
+1575154  2019-12-31 17:30:00       8078   40684.475  40695.860         0.4152
+1575155  2019-12-31 17:45:00       8078   40684.475  40695.860         0.4950
+1575156  2019-12-31 18:00:00       8078   40684.475  40695.860         0.3192
+1575158  2019-12-31 18:30:00       8078   40684.475  40695.860         0.1980
+
+[703542 rows x 5 columns]
 ~~~
 {: .output}
 
 The column used for the condition does not have to be included in the subset. Selecting rows in this case requires the use of label based indexing.
 
 ~~~
-print(df.loc[df["date"] == "2015-12-26", ["INTERVAL_TIME", "INTERVAL_READ"]])
+print(data.loc[data["INTERVAL_READ"] > 0.26, ['METER_FID', 'INTERVAL_TIME']])
 ~~~
 {: .language-python}
 ~~~
-            INTERVAL_TIME  INTERVAL_READ
-672  26-DEC-2015 00:00:00         0.1758
-673  26-DEC-2015 00:15:00         0.1752
-674  26-DEC-2015 00:30:00         0.1506
-675  26-DEC-2015 00:45:00         0.1632
-676  26-DEC-2015 01:00:00         0.1830
-..                    ...            ...
-763  26-DEC-2015 22:45:00         0.2046
-764  26-DEC-2015 23:00:00         0.1374
-765  26-DEC-2015 23:15:00         0.1908
-766  26-DEC-2015 23:30:00         0.2292
-767  26-DEC-2015 23:45:00         0.1944
+         METER_FID        INTERVAL_TIME
+66             285  2017-01-01 16:30:00
+77             285  2017-01-01 19:15:00
+134            285  2017-01-02 09:30:00
+139            285  2017-01-02 10:45:00
+141            285  2017-01-02 11:15:00
+...            ...                  ...
+1575152       8078  2019-12-31 17:00:00
+1575153       8078  2019-12-31 17:15:00
+1575154       8078  2019-12-31 17:30:00
+1575155       8078  2019-12-31 17:45:00
+1575156       8078  2019-12-31 18:00:00
 
-[96 rows x 2 columns]
-
+[373641 rows x 2 columns]
 ~~~
 {: .output}
 
 It is possible to specify multiple conditions.
 
 ~~~
-print(df[(df["INTERVAL_READ"] > 0.16) & (df["date"] == "2015-12-25")].head())
+print(data[(data["INTERVAL_READ"] > 0.16) & (data["METER_FID"] == 285)].head())
 ~~~
 {: .language-python}
 ~~~
-	METER_FID 	START_READ 	END_READ 	INTERVAL_TIME 	INTERVAL_READ 	date
-577 	10063 	15827.074 	15850.986 	25-DEC-2015 00:15:00 	0.1662 	2015-12-25
-578 	10063 	15827.074 	15850.986 	25-DEC-2015 00:30:00 	0.2280 	2015-12-25
-579 	10063 	15827.074 	15850.986 	25-DEC-2015 00:45:00 	0.1668 	2015-12-25
-581 	10063 	15827.074 	15850.986 	25-DEC-2015 01:15:00 	0.2112 	2015-12-25
-582 	10063 	15827.074 	15850.986 	25-DEC-2015 01:30:00 	0.2460 	2015-12-25
+          INTERVAL_TIME  METER_FID  START_READ   END_READ  INTERVAL_READ
+32  2017-01-01 08:00:00        285   14968.082  14979.831         0.2304
+33  2017-01-01 08:15:00        285   14968.082  14979.831         0.1854
+34  2017-01-01 08:30:00        285   14968.082  14979.831         0.1878
+35  2017-01-01 08:45:00        285   14968.082  14979.831         0.1920
+36  2017-01-01 09:00:00        285   14968.082  14979.831         0.1710
 ~~~
 {: .output}
 
 The ```query()``` method provides similar functionality with a simplified syntax. Using the ```query()``` method, the above example becomes:
 
 ~~~
-print(df.query('INTERVAL_READ > 0.16 and date == "2015-12-25"').head())
+print(data.query('INTERVAL_READ > 0.16 and METER_FID == 285').head())
 ~~~
 {: .language-python}
 ~~~
-	METER_FID 	START_READ 	END_READ 	INTERVAL_TIME 	INTERVAL_READ 	date
-577 	10063 	15827.074 	15850.986 	25-DEC-2015 00:15:00 	0.1662 	2015-12-25
-578 	10063 	15827.074 	15850.986 	25-DEC-2015 00:30:00 	0.2280 	2015-12-25
-579 	10063 	15827.074 	15850.986 	25-DEC-2015 00:45:00 	0.1668 	2015-12-25
-581 	10063 	15827.074 	15850.986 	25-DEC-2015 01:15:00 	0.2112 	2015-12-25
-582 	10063 	15827.074 	15850.986 	25-DEC-2015 01:30:00 	0.2460 	2015-12-25
+          INTERVAL_TIME  METER_FID  START_READ   END_READ  INTERVAL_READ
+32  2017-01-01 08:00:00        285   14968.082  14979.831         0.2304
+33  2017-01-01 08:15:00        285   14968.082  14979.831         0.1854
+34  2017-01-01 08:30:00        285   14968.082  14979.831         0.1878
+35  2017-01-01 08:45:00        285   14968.082  14979.831         0.1920
+36  2017-01-01 09:00:00        285   14968.082  14979.831         0.1710
 ~~~
 {: .output}
 
@@ -684,37 +698,32 @@ Note in this case that the conditions are passed as a string to the query. This 
 We can also select specific columns when using the ```query()``` method.
 
 ~~~
-print(df.query('INTERVAL_READ > 0.16 and date == "2015-12-25"')[["INTERVAL_READ","date"]].head())
+print(data.query('INTERVAL_READ > 0.16 and METER_FID == 285')[["METER_FID", "INTERVAL_TIME"]].head())
 ~~~
 {: .language-python}
 ~~~
-	INTERVAL_READ 	date
-577 	0.1662 	2015-12-25
-578 	0.2280 	2015-12-25
-579 	0.1668 	2015-12-25
-581 	0.2112 	2015-12-25
-582 	0.2460 	2015-12-25
+    METER_FID        INTERVAL_TIME
+32        285  2017-01-01 08:00:00
+33        285  2017-01-01 08:15:00
+34        285  2017-01-01 08:30:00
+35        285  2017-01-01 08:45:00
+36        285  2017-01-01 09:00:00
 ~~~
 {: .output}
 
 > ## Challenge: Select Intervals with Above Average Power Consumption
 >
-> The dataset used for this lesson is a subset of a much larger dataset measuring power consumption within homes in Los Alamos, New Mexico. Part of the reason for chosing the date range
-> of the subset is because there was a record-setting blizzard in the state on December 26 and 27, 2015. In later episodes in this lesson we will dig more deeply into the blizzard's
-> effect on power consumption and resulting errors or anomalies in the data, but using what we know already we can select a subset of the data to identify times of above average 
-> power consumption.
->
-> Fill in the blanks below to select the "INTERVAL_TIME", "INTERVAL_READ", and date for all rows for which the value of the "INTERVAL_READ" variable is above the average value for 
+> Fill in the blanks below to select the "INTERVAL_TIME", "INTERVAL_READ", and "METER_FID" for all rows for which the value of the "INTERVAL_READ" variable is above the average value for 
 > that variable in the entire dataset.
 > 
 > ~~~
-> df.___[df["_________"] ___ df["INTERVAL_READ"].mean(), ["___________", "___________", "date"]]
+> data.___[data["_________"] ___ data["INTERVAL_READ"].mean(), ["___________", "___________", "METER_FID"]]
 > ~~~
 > {: .language-python}
 >
 > > ## Solution
 > > ~~~
-> > df.loc[df["INTERVAL_READ"] > df["INTERVAL_READ"].mean(), ["INTERVAL_TIME", "INTERVAL_READ", "date"]]
+> > data.loc[data["INTERVAL_READ"] > data["INTERVAL_READ"].mean(), ["INTERVAL_TIME", "INTERVAL_READ", "METER_FID"]]
 > > ~~~
 > > {: .output}
 > {: .solution}
