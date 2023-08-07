@@ -405,7 +405,7 @@ low_readings["INTERVAL_READ"].hist()
 ~~~
 {: .language-python}
 ~~~
-!["Histogram showing distribution of INTERVAL_READ values below 0.005."]('../fig/meter_reading_histogram_1.png')
+!["Histogram showing distribution of INTERVAL_READ values below 0.005."](../fig/meter_reading_histogram_1.png)
 ~~~
 {: .output}
 
@@ -416,7 +416,7 @@ data["INTERVAL_READ"].hist(bins-20)
 ~~~
 {: .language-python}
 ~~~
-!["Histogram showing distribution of INTERVAL_READ values across entire dataset."]('../fig/meter_reading_histogram_2.png')
+!["Histogram showing distribution of INTERVAL_READ values across entire dataset."](../fig/meter_reading_histogram_2.png)
 ~~~
 {: .output}
 
