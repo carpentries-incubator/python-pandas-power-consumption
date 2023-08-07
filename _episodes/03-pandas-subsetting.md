@@ -85,7 +85,7 @@ The output above is a list, and the row index of our dataframe is the first obje
 ~~~
 {: .language-python}
 
-This indicates that our rows are indexed or labeled using incremented integers, beginning with the first row labeled 0 and the last row labeled 1439. Recall that Python uses zero-indexing, so the final value in the index should be understood as "up to but not including 105011." 
+This indicates that our rows are indexed or labeled using incremented integers, beginning with the first row labeled 0 and the last row labeled 105011. Recall that Python uses zero-indexing, so the final value in the index should be understood as "up to but not including 105011." 
 
 The final row index number may be surprising. The output of the ```info()``` function above indicates that our dataframe has 1,575,180 rows. But here the last row has an index number of 105011. Why is this?
 
@@ -108,13 +108,13 @@ print(data.axes)
 
 Note that this time the index is identified as a *RangeIndex*, rather than the *Int64index* that was output before. Instead of listing every integer index number, the range is given. This means that our rows are indexed or labeled using incremented integers, beginning with the first row labeled 0 and the last row labeled 1575810. Recall that Python uses zero-indexing, so the stop value in the RangeIndex should be understood as “up to but not including 1575180.” We can confirm this by referring to the output of the info() function above, which states that the dataframe index has 1575180 entries, labeled from 0 to 1575179.
 
-The second object in the list output by printing the dataframe's ```axes``` attribute is the column index. By default, the items in this index will be the column names, which can also be understood as the column axis labels.
+The second object in the list output by printing the dataframe's ```axes``` attribute is the column index. By default, the items in this index will be the column names, which can also be understood as the column axis labels:
 
 ~~~
 Index(['INTERVAL_TIME', 'METER_FID', 'START_READ', 'END_READ',
        'INTERVAL_READ']
 ~~~
-{: .language-python}
+{: .output}
 
 We can see the row labels using the ```head()``` function. Note that there is no column name for the row index. This is because there was no source column in our CSV file that the row labels refer to. We will update the attributes of the row index below.
 
@@ -381,17 +381,17 @@ Name: 1575179, dtype: object
 > ~~~
 > print(data.iloc[0]["START_READ"])
 >
-> df = pd.read_csv("../data/ladpu_smart_meter_data_01.csv")
+> data = pd.read_csv("../data/ladpu_smart_meter_data_01.csv")
 >
-> print(df.iloc[-1]["END_READ"])
+> print(data.iloc[-1]["END_READ"])
 > ~~~
 > {: .language-python}
 >
 > > ## Solution
 > > ~~~
-> df = pd.read_csv("../data/ladpu_smart_meter_data_01.csv")
-> print(df.iloc[0]["START_READ"])
-> print(df.iloc[-1]["END_READ"])
+> data = pd.read_csv("../data/ladpu_smart_meter_data_01.csv")
+> print(data.iloc[0]["START_READ"])
+> print(data.iloc[-1]["END_READ"])
 > > ~~~
 > > {: .output}
 > {: .solution}

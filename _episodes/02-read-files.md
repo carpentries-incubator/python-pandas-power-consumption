@@ -79,7 +79,7 @@ print(data.shape)
 ~~~
 {: .language-python}
 ~~~
-(105012, 4)
+(105012, 5)
 ~~~
 {: .output}
 
