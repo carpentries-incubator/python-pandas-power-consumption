@@ -6,16 +6,14 @@ questions:
 - "How can we summarize large datasets?"
 objectives:
 - "Summarize large datasets using descriptive statistics."
-- "Perform operations to identify outliers and missing values in tabular data."
+- "Perform operations to identify outliers in tabular data."
 keypoints:
 - "Use the PANDAS `describe()` method to generate descriptive statistics for a dataframe."
 ---
 
-Metadata provided with the published Los Alamos Public Utility Department Smart Meter dataset at Dryad <https://doi.org/10.5061/dryad.m0cfxpp2c> indicates that aside from de-identification the data have not been pre-processed or normalized and may include missing data, duplicate entries. 
+Metadata provided with the published Los Alamos Public Utility Department Smart Meter dataset at Dryad <https://doi.org/10.5061/dryad.m0cfxpp2c> indicates that aside from de-identification the data have not been pre-processed or normalized and may include missing data, duplicate entries, and other anomalies.
 
-The full dataset is too large for this tutorial format. The subset used includes data from two hundred smart meters, recorded between December 19, 2015 and January 2, 2016. The full dataset includes data from 1825 meters and covers a timespan from July, 2013 through December, 2019. The two hundred meters used for the lesson subset were randomly selected. The date range was chosen because it includes the week before and after a major US holiday followed by a blizzard. Coincidentally, date formatting problems with the meters that began in January 2016 also affect the data.
-
-For this lesson we will use Pandas functions to normalize the data subset.
+The full dataset is too large for this tutorial format. The subset used for the lesson has been cleaned to elminate null and duplicate values, but may still contain outliers or erroneous meter readings. One way to identify potential errors within a dataset is to inspect the data using descriptive statistics. 
 
 ## Descriptive Statistics
 
@@ -32,194 +30,217 @@ import glob
 Next, use the ```glob``` function to create a list of files that Pandas will combine into a single data frame.
 
 ~~~
-flist = glob.glob("./lesson_data/*.csv")
-print(flist[:5])
+file_list = glob.glob("../data/*.csv")
+file_list
 ~~~
 {: .language-python}
 ~~~
-['./lesson_data\\10063_dec_2015.csv',
- './lesson_data\\10270_dec_2015.csv',
- './lesson_data\\10274_dec_2015.csv',
- './lesson_data\\10373_dec_2015.csv',
- './lesson_data\\10577_dec_2015.csv']
+['../data\\ladpu_smart_meter_data_01.csv',
+ '../data\\ladpu_smart_meter_data_02.csv',
+ '../data\\ladpu_smart_meter_data_03.csv',
+ '../data\\ladpu_smart_meter_data_04.csv',
+ '../data\\ladpu_smart_meter_data_05.csv',
+ '../data\\ladpu_smart_meter_data_06.csv',
+ '../data\\ladpu_smart_meter_data_07.csv',
+ '../data\\ladpu_smart_meter_data_08.csv',
+ '../data\\ladpu_smart_meter_data_09.csv',
+ '../data\\ladpu_smart_meter_data_10.csv',
+ '../data\\ladpu_smart_meter_data_11.csv',
+ '../data\\ladpu_smart_meter_data_12.csv',
+ '../data\\ladpu_smart_meter_data_13.csv',
+ '../data\\ladpu_smart_meter_data_14.csv',
+ '../data\\ladpu_smart_meter_data_15.csv']
 ~~~
 {: .output}
 
-Use index slicing to read the first file into a dataframe and inspect it.
+As before, concatenate all of the individual CSV files into a single dataframe and reset the index.
 
 ~~~
-df = pd.read_csv(flist[0])
-print(df.axes)
+data = pd.concat([pd.read_csv(f) for f in file_list])
+data.reset_index(inplace=True, drop=True)
+print(data.axes)
 ~~~
 {: .language-python}
 ~~~
-[RangeIndex(start=0, stop=1440, step=1),
- Index(['METER_FID', 'START_READ', 'END_READ', 'INTERVAL_TIME', 'INTERVAL_READ',
-        'date'],
-       dtype='object')]
+[RangeIndex(start=0, stop=1575180, step=1), Index(['INTERVAL_TIME', 'METER_FID', 'START_READ', 'END_READ',
+       'INTERVAL_READ'],
+      dtype='object')]
 ~~~
 {: .output}
 
 ~~~
-print(df.info())
+print(data.info())
 ~~~
 {: .language-python}
 ~~~
 <class 'pandas.core.frame.DataFrame'>
-RangeIndex: 1440 entries, 0 to 1439
-Data columns (total 6 columns):
- #   Column         Non-Null Count  Dtype  
----  ------         --------------  -----  
- 0   METER_FID      1440 non-null   int64  
- 1   START_READ     1440 non-null   float64
- 2   END_READ       1440 non-null   float64
- 3   INTERVAL_TIME  1440 non-null   object 
- 4   INTERVAL_READ  1440 non-null   float64
- 5   date           1440 non-null   object 
-dtypes: float64(3), int64(1), object(2)
-memory usage: 67.6+ KB
+RangeIndex: 1575180 entries, 0 to 1575179
+Data columns (total 5 columns):
+ #   Column         Non-Null Count    Dtype  
+---  ------         --------------    -----  
+ 0   INTERVAL_TIME  1575180 non-null  object 
+ 1   METER_FID      1575180 non-null  int64  
+ 2   START_READ     1575180 non-null  float64
+ 3   END_READ       1575180 non-null  float64
+ 4   INTERVAL_READ  1575180 non-null  float64
+dtypes: float64(3), int64(1), object(1)
+memory usage: 60.1+ MB
 None
+
 ~~~
 {: .output}
 
-Note that the *date* field in the dataset is not in the original raw data, but was added as pre-processing for this tutorial using a process described in a previous episode.
-
-Next we create a loop to append the other files in the list to our dataframe. Since we have already read the first file into the dataframe, we will use index slicing to iterate on the file list beginning with the second item in the list.
+In a later episode we will create a datetime index using the *INTERVAL_TIME* field. For now we will change the data type of *INTERVAL_TIME* to *datetime* and store the updated data in an *iso_date* column. 
 
 ~~~
-for f in flist[1:]:
-    df = df.append(pd.read_csv(f), ignore_index=True)
-
-print(df.info())
+data["iso_date"] = pd.to_datetime(data["INTERVAL_TIME"], infer_datetime_format=True)
+print(data.info())
 ~~~
 {: .language-python}
 ~~~
 <class 'pandas.core.frame.DataFrame'>
-RangeIndex: 273600 entries, 0 to 273599
+RangeIndex: 1575180 entries, 0 to 1575179
 Data columns (total 6 columns):
- #   Column         Non-Null Count   Dtype  
----  ------         --------------   -----  
- 0   METER_FID      273600 non-null  object 
- 1   START_READ     273600 non-null  float64
- 2   END_READ       273600 non-null  float64
- 3   INTERVAL_TIME  273600 non-null  object 
- 4   INTERVAL_READ  273600 non-null  float64
- 5   date           273600 non-null  object 
-dtypes: float64(3), object(3)
-memory usage: 12.5+ MB
+ #   Column         Non-Null Count    Dtype         
+---  ------         --------------    -----         
+ 0   INTERVAL_TIME  1575180 non-null  object        
+ 1   METER_FID      1575180 non-null  int64         
+ 2   START_READ     1575180 non-null  float64       
+ 3   END_READ       1575180 non-null  float64       
+ 4   INTERVAL_READ  1575180 non-null  float64       
+ 5   iso_date       1575180 non-null  datetime64[ns]
+dtypes: datetime64[ns](1), float64(3), int64(1), object(1)
+memory usage: 72.1+ MB
+None
+
 ~~~
 {: .output}
 
-The output of the ```info()``` method above indicates that three of the columns in the dataframe have numeric data types: "START\_READ", "END\_READ", and "INTERVAL\_READ". By default, Pandas will calculate descriptive statistics for numeric data types within a dataset.
+The output of the ```info()``` method above indicates that four of the columns in the dataframe have numeric data types: "METER\_FID", "START\_READ", "END\_READ", and "INTERVAL\_READ". By default, Pandas will calculate descriptive statistics for numeric data types within a dataset.
 
 ~~~
-print(df.describe())
+print(data.describe())
 ~~~
 {: .language-python}
 ~~~
-
-	    START_READ 	    END_READ 	    INTERVAL_READ
-count 	273600.000000 	273600.000000 	273600.000000
-mean 	17144.337763 	17169.473211 	0.261822
-std 	10304.468357 	10318.573027 	0.270579
-min 	658.789000 	    661.687000 	    0.000000
-25% 	9872.956000 	9882.920000 	0.090000
-50% 	15800.545000 	15827.074000 	0.171600
-75% 	22730.634000 	22752.376000 	0.336000
-max 	52071.944000 	52158.061000 	3.232200
+          METER_FID    START_READ      END_READ  INTERVAL_READ
+count  1.575180e+06  1.575180e+06  1.575180e+06   1.575180e+06
+mean   2.357953e+04  3.733560e+04  3.734571e+04   2.322766e-01
+std    1.414977e+04  1.877812e+04  1.877528e+04   3.026917e-01
+min    2.850000e+02  7.833000e+00  7.833000e+00   0.000000e+00
+25%    1.006300e+04  2.583424e+04  2.584509e+04   8.820000e-02
+50%    2.419700e+04  3.399917e+04  3.401764e+04   1.452000e-01
+75%    3.503400e+04  4.391686e+04  4.393681e+04   2.490000e-01
+max    4.501300e+04  9.997330e+04  9.997330e+04   3.709200e+00
 ~~~
 {: .output}
 
-Since the values for "START\_READ" and "END\_READ" are calculated across two hundred different meters, those statistics may not be useful or of interest. Without grouping or otherwise manipulating the data, the only statistics that are interesting in the aggregate are for the "INTERVAL\_READ" variable. This is the variable that measures actual power consumption per time intervals of 15 minutes.
+Since the values for "START\_READ" and "END\_READ" are calculated across fifteen different meters over a period of three years, those statistics may not be useful or of interest. Without grouping or otherwise manipulating the data, the only statistics that may be informative in the aggregate are for the "INTERVAL\_READ" variable. This is the variable that measures actual power consumption per time intervals of 15 minutes.
+
+Also note that "METER\_FID" is treated as an integer by Pandas. This is reasonable, since the identifiers are whole numbers. However, since these identifiers aren't treated numerically in our analysis we can change the data type to *object*. We will see below how this affects the way statistics are calculated.
+
+~~~
+data = data.astype({"METER_FID": "object"})
+print(data.dtypes)
+~~~
+{: .language-python}
+~~~
+INTERVAL_TIME            object
+METER_FID                object
+START_READ              float64
+END_READ                float64
+INTERVAL_READ           float64
+iso_date         datetime64[ns]
+dtype: object
+~~~
+{: .output}
+
+If we re-run the code ```print(data.describe())``` as above, Pandas will now exclude information about "METER\_FID", since by default Pandas only outputs descriptive statistics for numeric data types. We can change the default behavior to include statistics for all columns. 
+
+~~~
+print(data.describe(include="all", datetime_is_numeric=True))
+~~~
+{: .language-python}
+~~~
+              INTERVAL_TIME  METER_FID    START_READ      END_READ  \
+count               1575180  1575180.0  1.575180e+06  1.575180e+06   
+unique               105012       15.0           NaN           NaN   
+top     2017-01-01 00:00:00      285.0           NaN           NaN   
+freq                     15   105012.0           NaN           NaN   
+mean                    NaN        NaN  3.733560e+04  3.734571e+04   
+min                     NaN        NaN  7.833000e+00  7.833000e+00   
+25%                     NaN        NaN  2.583424e+04  2.584509e+04   
+50%                     NaN        NaN  3.399917e+04  3.401764e+04   
+75%                     NaN        NaN  4.391686e+04  4.393681e+04   
+max                     NaN        NaN  9.997330e+04  9.997330e+04   
+std                     NaN        NaN  1.877812e+04  1.877528e+04   
+
+        INTERVAL_READ                       iso_date  
+count    1.575180e+06                        1575180  
+unique            NaN                            NaN  
+top               NaN                            NaN  
+freq              NaN                            NaN  
+mean     2.322766e-01  2018-07-02 20:14:16.239287296  
+min      0.000000e+00            2017-01-01 00:00:00  
+25%      8.820000e-02            2017-10-02 12:11:15  
+50%      1.452000e-01            2018-07-03 00:22:30  
+75%      2.490000e-01            2019-04-02 12:33:45  
+max      3.709200e+00            2019-12-31 23:45:00  
+std      3.026917e-01                            NaN  
+~~~
+{: .output}
+
+For non-numeric data types, Pandas has included statistics for *count*, *unique*, *top*, and *freq*. Respectively, these represent the total number of observations, the number of uniquely occuring values, the most commonly occuring value, and the number of time the most commonly occurring value appears in the dataset.
 
 We can view the descriptive statistics for a single column:
 
 ~~~
-print(df["INTERVAL_READ"].describe())
+print(data["INTERVAL_READ"].describe())
 ~~~
 {: .language-python}
 ~~~
-count    273600.000000
-mean          0.261822
-std           0.270579
-min           0.000000
-25%           0.090000
-50%           0.171600
-75%           0.336000
-max           3.232200
+count    1.575180e+06
+mean     2.322766e-01
+std      3.026917e-01
+min      0.000000e+00
+25%      8.820000e-02
+50%      1.452000e-01
+75%      2.490000e-01
+max      3.709200e+00
 Name: INTERVAL_READ, dtype: float64
 ~~~
 {: .output}
 
-We notice the maximum interval reading is way above the 75% range. For a closer inspection of high readings, we can also specify percentiles.
+We notice the difference between the value given for 75% range and the maximum meter reading is larger than the differences between the other percentiles. For a closer inspection of high readings, we can also specify percentiles.
 
 ~~~
-df["INTERVAL_READ"].describe(percentiles = [0.75, 0.85, 0.95, 0.99])
+print(data["INTERVAL_READ"].describe(percentiles = [0.75, 0.85, 0.95, 0.99]))
 ~~~
 {: .language-python}
 ~~~
-count    273600.000000
-mean          0.261822
-std           0.270579
-min           0.000000
-50%           0.171600
-75%           0.336000
-85%           0.477600
-95%           0.837000
-99%           1.272600
-max           3.232200
+count    1.575180e+06
+mean     2.322766e-01
+std      3.026917e-01
+min      0.000000e+00
+50%      1.452000e-01
+75%      2.490000e-01
+85%      3.846000e-01
+95%      6.912000e-01
+99%      1.714926e+00
+max      3.709200e+00
 Name: INTERVAL_READ, dtype: float64
 ~~~
 {: .output}
 
-There seem to be some meter readings that are unusually high. We will investgate this in more detail below.
-
-First, let's look at descriptive statistics that Pandas provides for non-numeric data types. Even through these are excluded by default, they can still be calculated using the ```include="all"``` argument.
-
-~~~
-df.describe(include="all")
-~~~
-{: .language-python}
-~~~
-        METER_FID     START_READ       END_READ INTERVAL_TIME  INTERVAL_READ  \
-count    273600.0  273600.000000  273600.000000        273600  273600.000000   
-unique      189.0            NaN            NaN          1251            NaN   
-top       10862.0            NaN            NaN     02-JAN-16            NaN   
-freq       2880.0            NaN            NaN         18240            NaN   
-mean          NaN   17144.337763   17169.473211           NaN       0.261822   
-std           NaN   10304.468357   10318.573027           NaN       0.270579   
-min           NaN     658.789000     661.687000           NaN       0.000000   
-25%           NaN    9872.956000    9882.920000           NaN       0.090000   
-50%           NaN   15800.545000   15827.074000           NaN       0.171600   
-75%           NaN   22730.634000   22752.376000           NaN       0.336000   
-max           NaN   52071.944000   52158.061000           NaN       3.232200   
-
-              date  
-count       273600  
-unique          15  
-top     2015-12-19  
-freq         18240  
-mean           NaN  
-std            NaN  
-min            NaN  
-25%            NaN  
-50%            NaN  
-75%            NaN  
-max            NaN  
-~~~
-{: .output}
-
-Some statistics are excluded for non-numeric data types, but Pandas does provide information about the total number of observations, the number of uniquely occuring values, the most commonly occuring value, and the number of time the most commonly occurring value appears in the dataset.
-
-Already we see some potential problems with the data. First, our most frequently occurring "INTERVAL\_TIME" value, 02-JAN-16, is not in the format we expect. It is lacking a timestamp, and it appears that at least 18,240 values in this column are affected. Also, the output of the ```df.info()``` function after reading in the first file in the list indicates that data for a single meter should consist of 1440 rows, yet the most frequently occurring "METER\_FID" value of 10862 occurs twice that many times. This means there is potentially some duplication in the dataset. Finally, although our file list consisted of 200 files, there are only 189 unique values for "METER\_FID." This may also point to some duplication.
+There seem to be some meter readings that are unusually high between the 95% percentile and the maximum. We will investgate this in more detail below.
 
 > ## Challenge: Descriptive Statistics by Data Type
 >
-> We have seen that the default behavior in pandas is to output descriptive statistics for 
+> We have seen that the default behavior in Pandas is to output descriptive statistics for 
 > numeric data types. It is also possible, using the ```include``` argument demonstrated 
 > above, to output descriptive statistics for specific data types.
 > 
-> Write some code to output descriptive statistics by datatype for each of the data
+> Write some code to output descriptive statistics by data type for each of the data
 > types in the dataset. Refer to python data types documentation and use any of 
 > the methods we have demonstrated to identify the data types of different 
 > columns in a pandas dataframe.
@@ -227,222 +248,187 @@ Already we see some potential problems with the data. First, our most frequently
 > > ## Solution
 > > ~~~
 > > print("Dataframe info:")
-> > print(df.info())
+> > print(data.info())
 > > 
 > > Dataframe info:
 > > <class 'pandas.core.frame.DataFrame'>
-> > RangeIndex: 276480 entries, 0 to 276479
+> > RangeIndex: 1575180 entries, 0 to 1575179
 > > Data columns (total 6 columns):
-> > #   Column         Non-Null Count   Dtype  
-> > ---  ------         --------------   -----  
-> > 0   METER_FID      276480 non-null  object 
-> > 1   START_READ     276480 non-null  float64
-> > 2   END_READ       276480 non-null  float64
-> > 3   INTERVAL_TIME  276480 non-null  object 
-> > 4   INTERVAL_READ  276480 non-null  float64
-> > 5   date           276480 non-null  object 
-> > dtypes: float64(3), object(3)
-> > memory usage: 12.7+ MB
+> >  #   Column         Non-Null Count    Dtype         
+> > ---  ------         --------------    -----         
+> >  0   INTERVAL_TIME  1575180 non-null  object        
+> >  1   METER_FID      1575180 non-null  object        
+> >  2   START_READ     1575180 non-null  float64       
+> >  3   END_READ       1575180 non-null  float64       
+> >  4   INTERVAL_READ  1575180 non-null  float64       
+> >  5   iso_date       1575180 non-null  datetime64[ns]
+> > dtypes: datetime64[ns](1), float64(3), object(2)
+> > memory usage: 72.1+ MB
 > > None
 > >
 > > print("Descriptive stats for floating point numbers:")
-> > print(df.describe(include=float))
-> >
+> > print(data.describe(include=float))
+> > 
 > > Descriptive stats for floating point numbers:
-> >           START_READ       END_READ  INTERVAL_READ
-> > count  276480.000000  276480.000000  276480.000000
-> > mean    17177.140133   17202.299270       0.262069
-> > std     10283.055260   10297.155631       0.270478
-> > min       658.789000     661.687000       0.000000
-> > 25%      9918.083000    9932.173000       0.090600
-> > 50%     15800.545000   15827.074000       0.171600
-> > 75%     22752.376000   22778.772000       0.336000
-> > max     52071.944000   52158.061000       3.232200
+> >          START_READ      END_READ  INTERVAL_READ
+> > count  1.575180e+06  1.575180e+06   1.575180e+06
+> > mean   3.733560e+04  3.734571e+04   2.322766e-01
+> > std    1.877812e+04  1.877528e+04   3.026917e-01
+> > min    7.833000e+00  7.833000e+00   0.000000e+00
+> > 25%    2.583424e+04  2.584509e+04   8.820000e-02
+> > 50%    3.399917e+04  3.401764e+04   1.452000e-01
+> > 75%    4.391686e+04  4.393681e+04   2.490000e-01
+> > max    9.997330e+04  9.997330e+04   3.709200e+00
 > > 
 > > print("Descriptive stats for objects:")
-> > print(df.describe(include=object))
+> > print(data.describe(include=object))
 > >
 > > Descriptive stats for objects:
-> >         METER_FID INTERVAL_TIME        date
-> > count      276480        276480      276480
-> > unique        191          1251          15
-> > top         10862     02-JAN-16  2015-12-19
-> > freq         2880         18432       18432
+> >               INTERVAL_TIME  METER_FID
+> > count               1575180    1575180
+> > unique               105012         15
+> > top     2017-01-01 00:00:00        285
+> > freq                     15     105012
 > > ~~~
 > > {: .output}
 > {: .solution}
 {: .challenge}
-
-### Checking for Null Values
-
-Before proceeding, let's check for missing data. Missing data in pandas are represented using ```NaN```, or "not a number."
-
-~~~
-print(pd.isna(df))
-~~~
-{: .language-python}
-~~~
-      METER_FID  START_READ  END_READ  INTERVAL_TIME  INTERVAL_READ   date
-0         False       False     False          False          False  False
-1         False       False     False          False          False  False
-2         False       False     False          False          False  False
-3         False       False     False          False          False  False
-4         False       False     False          False          False  False
-...         ...         ...       ...            ...            ...    ...
-1435      False       False     False          False          False  False
-1436      False       False     False          False          False  False
-1437      False       False     False          False          False  False
-1438      False       False     False          False          False  False
-1439      False       False     False          False          False  False
-
-[276480 rows x 6 columns]
-~~~
-{: .output}
-
-A quick inspection doesn't show any missing data in the first or last five rows. What we really want is to find rows with missing data or NaN values, and we can look for null values within columns as well as rows.
-
-To search for NaN values across all rows within a dataframe, we use the row axis.
-
-~~~
-row_na = df[df.isna().any(axis=1)].copy()
-row_na
-~~~
-{: .language-python}
-~~~
-Empty DataFrame
-Columns: [METER_FID, START_READ, END_READ, INTERVAL_TIME, INTERVAL_READ, date]
-Index: []
-~~~
-{: .output}
-
-The operation above returns an empty dataframe, indicating that there are now missing values in the dataset. But we can also check by column.
-
-~~~
-meter_fid_na = df[df["METER_FID"].isna()].copy()
-print(meter_fid_na)
-~~~
-{: .language-python}
-~~~
-Empty DataFrame
-Columns: [METER_FID, START_READ, END_READ, INTERVAL_TIME, INTERVAL_READ, date]
-Index: []
-~~~
-{: .output}
-
-As expected, this operation also returns an empty dataframe. 
+ 
 
 ### Working with Values
 
 Returning to our descriptive statistics, we have already noted that the maximum value is well above the 99th percentile. Our minimum value of zero may also be unusual, since many homes might be expected to use some amount of energy every fifteen minutes, even when residents are away. 
 
 ~~~
-df["INTERVAL_READ"].describe()
+print(data["INTERVAL_READ"].describe())
 ~~~
 {: .language-python}
 ~~~
-count    276480.000000
-mean          0.262069
-std           0.270478
-min           0.000000
-25%           0.090600
-50%           0.171600
-75%           0.336000
-max           3.232200
+count    1.575180e+06
+mean     2.322766e-01
+std      3.026917e-01
+min      0.000000e+00
+25%      8.820000e-02
+50%      1.452000e-01
+75%      2.490000e-01
+max      3.709200e+00
 Name: INTERVAL_READ, dtype: float64
 ~~~
 {: .output}
 
-As we have seen, we can select the minimum and maximum values in a column using the ```min()``` and ```max()``` functions.
+We can also select the minimum and maximum values in a column using the ```min()``` and ```max()``` functions.
 
 ~~~
-print("Minimum value:", df["INTERVAL_READ"].min())
-print("Maximum value:", df["INTERVAL_READ"].max())
+print("Minimum value:", data["INTERVAL_READ"].min())
+print("Maximum value:", data["INTERVAL_READ"].max())
 ~~~
 {: .language-python}
 ~~~
 Minimum value: 0.0
-Maximum value: 3.2322
+Maximum value: 3.7092
 ~~~
 {: .output}
 
 This is useful if we want to know what those values are. We may want to have more information about the corresponding meter's start and end reading, the date, and the meter ID. One way to discover this information is to use the ```idxmin()``` and ```idxmax()``` functions to get the position indices of the rows where the minimum and maximum values occur.
 
 ~~~
-print("Position index of the minimum value:", df["INTERVAL_READ"].idxmin())
-print("Position index of the maximum value:", df["INTERVAL_READ"].idxmax())
+print("Position index of the minimum value:", data["INTERVAL_READ"].idxmin())
+print("Position index of the maximum value:", data["INTERVAL_READ"].idxmax())
 ~~~
 {: .language-python}
 ~~~
-Position index of the minimum value: 2883
-Position index of the maximum value: 86815
+Position index of the minimum value: 31315
+Position index of the maximum value: 1187650
 ~~~
 {: .output}
 
 Now we can use the position index to select the row with the reported minimum value.
 
 ~~~
-print(df.iloc[2883])
+print(data.iloc[31315])
 ~~~
 {: .language-python}
 ~~~
-METER_FID                       10274
-START_READ                    1616.99
-END_READ                       1619.7
-INTERVAL_TIME    19-DEC-2015 00:45:00
-INTERVAL_READ                       0
-date                       2015-12-19
-Name: 2883, dtype: object
+INTERVAL_TIME    2017-11-24 05:45:00
+METER_FID                        285
+START_READ                 18409.997
+END_READ                   18418.554
+INTERVAL_READ                    0.0
+iso_date         2017-11-24 05:45:00
+Name: 31315, dtype: object
 ~~~
 {: .output}
 
 We can do the same with the maximum value.
 
 ~~~
-print(df.iloc[86815])
+print(data.iloc[1187650])
 ~~~
 {: .language-python}
 ~~~
-METER_FID                       22918
-START_READ                    23541.6
-END_READ                      23603.1
-INTERVAL_TIME    23-DEC-2015 07:45:00
-INTERVAL_READ                  3.2322
-date                       2015-12-23
-Name: 86815, dtype: object
+INTERVAL_TIME    2017-12-06 18:30:00
+METER_FID                      29752
+START_READ                 99685.954
+END_READ                   99788.806
+INTERVAL_READ                 3.7092
+iso_date         2017-12-06 18:30:00
+Name: 1187650, dtype: object
 ~~~
 {: .output}
 
-Notice that in both cases, the ```idxmin()``` and ```idxmax()``` functions return a single position index number, when in fact the minimum and maximum values may occur multiple times. We can use the ```value_counts()``` function to demonstrate that 0 occurs thousands of times in the dataset.
+An important caveat here is that in both cases, the ```idxmin()``` and ```idxmax()``` functions return a single position index number, when in fact the minimum and maximum values may occur multiple times. We can use the ```value_counts()``` function to demonstrate that 0 occurs several times in the dataset. Since the dataset is large, we will first subset the data to only include meter readings with very small intervals. Then we will get the count of values across the subset.
 
 ~~~
-print(pd.value_counts(df["INTERVAL_READ"]))
+low_readings = data[data["INTERVAL_READ"] <= 0.005].copy()
+print(pd.value_counts(low_readings["INTERVAL_READ"]))
 ~~~
 {: .language-python}
 ~~~
-0.0000    6346
-0.1488    1087
-0.1482     918
-0.0012     903
-0.0060     765
-          ... 
-1.8162       1
-1.7976       1
-2.1366       1
-1.5072       1
-1.7850       1
-Name: INTERVAL_READ, Length: 3293, dtype: int64
+0.00480    856
+0.00420    349
+0.00000     72
+0.00001     40
+0.00360      3
+0.00354      1
+0.00177      1
+0.00240      1
+0.00180      1
+0.00294      1
+Name: INTERVAL_READ, dtype: int64
 ~~~
 {: .output}
 
-To find the number of rows with "INTERVAL\_READ" values equal to a specific value, we can also create a subset of rows with that value and then get the length of the subset.
+It's also helpful to visualize the distribution of values. Pandas has a ```hist()``` function for this.
 
 ~~~
-print("Number of rows with minimum interval read values:", len(df[df["INTERVAL_READ"] == 0]))
-print("Number of rows with maximum interval read values:", len(df[df["INTERVAL_READ"] == 3.2322]))
+low_readings["INTERVAL_READ"].hist()
 ~~~
 {: .language-python}
 ~~~
-Number of rows with minimum interval read values: 6346
+!["Histogram showing distribution of INTERVAL_READ values below 0.005."]('../fig/meter_reading_histogram_1.png')
+~~~
+{: .output}
+
+We can plot the distribution of *INTERVAL_READ* values across the entire dataset. Note that the default behavior in this case is to group the values into 10 *bins*. The number of bins can be specified using the *bins* argument. 
+
+~~~
+data["INTERVAL_READ"].hist(bins-20)
+~~~
+{: .language-python}
+~~~
+!["Histogram showing distribution of INTERVAL_READ values across entire dataset."]('../fig/meter_reading_histogram_2.png')
+~~~
+{: .output}
+
+To find the number of rows with "INTERVAL\_READ" values equal to the minimum or maximum value of that column, we can also create a subset of rows with that value and then get the length of the subset.
+
+~~~
+print("Number of rows with minimum interval read values:", len(data[data["INTERVAL_READ"] == data["INTERVAL_READ"].min()]))
+print("Number of rows with maximum interval read values:", len(data[data["INTERVAL_READ"] == data["INTERVAL_READ"].max()]))
+~~~
+{: .language-python}
+~~~
+Number of rows with minimum interval read values: 72
 Number of rows with maximum interval read values: 1
 ~~~
 {: .output}
