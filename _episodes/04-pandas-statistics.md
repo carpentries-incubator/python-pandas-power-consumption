@@ -404,10 +404,8 @@ It's also helpful to visualize the distribution of values. Pandas has a ```hist(
 low_readings["INTERVAL_READ"].hist()
 ~~~
 {: .language-python}
-~~~
-!["Histogram showing distribution of INTERVAL_READ values below 0.005."](../fig/meter_reading_histogram_1.png)
-~~~
-{: .output}
+
+![Histogram showing distribution of INTERVAL_READ values below 0.005](../fig/meter_reading_histogram_1.png)
 
 We can plot the distribution of *INTERVAL_READ* values across the entire dataset. Note that the default behavior in this case is to group the values into 10 *bins*. The number of bins can be specified using the *bins* argument. 
 
@@ -415,10 +413,9 @@ We can plot the distribution of *INTERVAL_READ* values across the entire dataset
 data["INTERVAL_READ"].hist(bins-20)
 ~~~
 {: .language-python}
-~~~
-!["Histogram showing distribution of INTERVAL_READ values across entire dataset."](../fig/meter_reading_histogram_2.png)
-~~~
-{: .output}
+
+![Histogram showing distribution of INTERVAL_READ values across entire dataset](../fig/meter_reading_histogram_2.png)
+
 
 To find the number of rows with "INTERVAL\_READ" values equal to the minimum or maximum value of that column, we can also create a subset of rows with that value and then get the length of the subset.
 
