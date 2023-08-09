@@ -313,4 +313,6 @@ daily_data["INTERVAL_READ"].sum().plot()
 
 ![Plot of daily total power consumption from a single smart meter.](../fig/datetime_indexing_3.png)
 
+
+
 {% include links.md %}
