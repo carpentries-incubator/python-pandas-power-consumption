@@ -24,6 +24,7 @@ First, import Pandas and the ```glob``` library, which provides utilities for ge
 ~~~
 import pandas as pd
 import glob
+import numpy as np
 ~~~
 {: .language-python}
 
@@ -427,6 +428,111 @@ print("Number of rows with maximum interval read values:", len(data[data["INTERV
 ~~~
 Number of rows with minimum interval read values: 72
 Number of rows with maximum interval read values: 1
+~~~
+{: .output}
+
+### Grouping data to calculate statistics per smart meter
+
+Up to this point we have been calculating statistics across the entire dataset. This may be useful in some limited circumstances, recall that the dataset consists of data from 15 smart metters over the course of three years. In many cases it will be more useful to calculate statistics per meter. One way to do that would have been to read and analyze the data for each meter individually by reading one file at a time. However, data such as these may often be streamed from multiple meters or other instruments into a single source or database. In these or similar cases it can be more efficient to group data according to specific characteristics. 
+
+Our dataset includes a *METER_FID* field that specifies the identifier of the smart meter from which the data were captured. We can use Pandas' ```groupby()``` method to group data on this field. First we can inspect the number of meters represented in the dataset using the ```unique()``` function.
+
+~~~
+print(data["METER_FID"].unique())
+~~~
+{: .language-python}
+~~~
+[285 10063 44440 4348 45013 32366 24197 18918 35034 42755 25188 29752 20967 12289 8078]
+~~~
+{: .output}
+
+The output is an array of the unique values in the *METER_FID* column. We can group the data by these values to essentially create 15 logical subsets of data, with one subset per meter.
+
+~~~
+meter_data_groups = data.groupby("METER_FID")
+print(meter_data_groups.groups.keys())
+~~~
+{: .language-python}
+~~~
+dict_keys([285, 4348, 8078, 10063, 12289, 18918, 20967, 24197, 25188, 29752, 32366, 35034, 42755, 44440, 45013])
+~~~
+{: .output}
+
+We can use the key or the name of the group to reference a specific group using the ```get_group()``` method. Because a group in Pandas is a dataframe, we can operate against groups using the same methods available to any Pandas dataframe.
+
+~~~
+print(type(meter_data_groups.get_group(285)))
+~~~
+{: .language-python}
+~~~
+<class 'pandas.core.frame.DataFrame'>
+~~~
+{: .output}
+
+Above, we used the ```max()``` function to identify the maximum *INTERVAL_READ* value within the entire dataset. Using ```get_group()```, we can select the maximum value and other statitics using similar syntax.
+
+~~~
+print("Maximum value for meter ID 285:", meter_data_groups.get_group(285)["INTERVAL_READ"].max())
+print("Sum of values for meter ID 285:", meter_data_groups.get_group(285)["INTERVAL_READ"].sum())
+~~~
+{: .language-python}
+~~~
+Maximum value for meter ID 285: 2.0526
+Sum of values for meter ID 285: 13407.0322
+~~~
+{: .output}
+
+Importantly, we can calculate statistics across all groups at once. 
+
+~~~
+meter_data_groups['INTERVAL_READ'].sum()
+~~~
+{: .language-python}
+~~~
+METER_FID
+285      13407.0322
+4348      9854.7946
+8078     16979.6884
+10063    22628.9866
+12289    21175.5478
+18918    13790.9044
+20967    20488.7761
+24197    16401.9134
+25188    28962.4688
+29752    67684.5526
+32366    25832.2660
+35034    22653.0976
+42755    21882.2350
+44440    46950.2104
+45013    17184.9206
+Name: INTERVAL_READ, dtype: float64
+~~~
+{: .output}
+
+Finally, to calculate multiple statistics we pass a list of the statistics we're interested in as an argument to the ```agg()``` method.
+
+~~~
+print(meter_data_groups['INTERVAL_READ'].agg([np.sum, np.amax, np.amin, np.mean, np.std]))
+~~~
+{: .language-python}
+~~~
+                  sum    amax  amin      mean       std
+METER_FID                                              
+285        13407.0322  2.0526   0.0  0.127671  0.188185
+4348        9854.7946  1.4202   0.0  0.093844  0.093136
+8078       16979.6884  1.4202   0.0  0.161693  0.158175
+10063      22628.9866  2.2284   0.0  0.215490  0.234565
+12289      21175.5478  1.4928   0.0  0.201649  0.125956
+18918      13790.9044  1.8240   0.0  0.131327  0.153955
+20967      20488.7761  1.2522   0.0  0.195109  0.127863
+24197      16401.9134  1.4574   0.0  0.156191  0.117501
+25188      28962.4688  2.2116   0.0  0.275802  0.259377
+29752      67684.5526  3.7092   0.0  0.644541  0.779913
+32366      25832.2660  1.5744   0.0  0.245993  0.213024
+35034      22653.0976  2.2038   0.0  0.215719  0.157792
+42755      21882.2350  2.1780   0.0  0.208378  0.151845
+44440      46950.2104  2.2098   0.0  0.447094  0.334872
+45013      17184.9206  1.6278   0.0  0.163647  0.148538
 ~~~
 {: .output}
 
